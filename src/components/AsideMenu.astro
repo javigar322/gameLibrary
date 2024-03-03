@@ -1,0 +1,85 @@
+---
+interface Props {
+	title: string
+}
+
+const { title } = Astro.props
+import { Card } from "@/components/ui/card"
+import AsideMenuItem from "@/components/AsideMenuItem.astro"
+import { Gamepad2, User, Search, Library } from "lucide-react"
+import { SideSearch } from "@/components/SideSearch"
+import { UserMenu } from "@/components/UserAsideMenu"
+
+import { getSession } from "auth-astro/server"
+import { Image } from "astro:assets"
+
+const session = await getSession(Astro.request)
+const iniciado = session ? true : false
+---
+
+<nav class="flex flex-1 flex-col gap-2">
+	<!-- carta de arriba -->
+	<Card className="">
+		<AsideMenuItem href="/">
+			<Gamepad2 />
+			GameLibrary
+		</AsideMenuItem>
+		<AsideMenuItem href="/search">
+			<Search />
+			Buscar
+		</AsideMenuItem>
+
+		<!-- Menu del usuario -->
+		<UserMenu client:load data={iniciado}>
+			{
+				session ? (
+					<p> {session.user?.name}</p>
+				) : (
+					<AsideMenuItem slot="usuario">
+						<User /> User{" "}
+					</AsideMenuItem>
+				)
+			}
+			<AsideMenuItem slot="trigger">
+				{
+					session ? (
+						<Image
+							src={session.user?.image as string}
+							alt={session.user?.name as string}
+							class={"rounded-full"}
+							width={24}
+							height={24}
+							decoding="async"
+							loading="eager"
+						/>
+					) : (
+						<User />
+					)
+				}
+				{session ? <p> {session.user?.name}</p> : <p id="login-button"> User </p>}
+			</AsideMenuItem>
+			<p id="logout-button" slot="logout">Logout</p>
+		</UserMenu>
+		<!-- Menu del usuario -->
+	</Card>
+	<!-- carta de abajo -->
+	<Card className="flex-1 ">
+		<AsideMenuItem href="/">
+			<Library />
+			Mi biblioteca
+		</AsideMenuItem>
+
+		<SideSearch client:load />
+
+		<!-- 
+		<ScrollArea className="h-[650px]" client:visible>
+			<div class="flex flex-row">
+				<SearchIcon />
+			</div>
+			{games.map((game) => <SideMenuCard game={game} />)}
+		</ScrollArea>
+		 -->
+	</Card>
+</nav>
+
+<script></script>

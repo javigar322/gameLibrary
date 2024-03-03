@@ -1,0 +1,25 @@
+---
+interface Props {
+	href: string
+	nameI: string
+}
+
+const { href, nameI } = Astro.props
+import { SiGithub, SiTwitter } from "@icons-pack/react-simple-icons"
+---
+
+<a
+	href={href}
+	title={`icono de ${nameI}`}
+	class="cursor-pointer transition hover:scale-125 hover:opacity-70"
+	target="_blank"
+	rel="noopener"
+>
+	{
+		{
+			SiGithub: <SiGithub />,
+			SiTwitter: <SiTwitter />,
+			// Agrega más iconos según sea necesario
+		}[nameI]
+	}
+</a>

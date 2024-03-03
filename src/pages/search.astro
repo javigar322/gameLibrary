@@ -1,0 +1,15 @@
+---
+import "@/styles/globals.css"
+import Layout from "../layouts/Layout.astro"
+import { Card } from "@/components/ui/card"
+
+import { SearchResult } from "@/components/SearchResult"
+---
+
+<Layout title="Busqueda.">
+	<Card className="grid h-full w-full flex-1 ">
+		<SearchResult client:load />
+	</Card>
+</Layout>
+
+<style></style>
