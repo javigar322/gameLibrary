@@ -1,0 +1,16 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { Card } from "@/components/ui/card"
+import { GameStore } from "@/components/gameStore"
+import type { Game } from "@/types/game"
+
+const { id } = Astro.params
+const response = await fetch(`http://localhost:4321/api/gameId.json?id=${id}`)
+const data: Game = await response.json()
+---
+
+<Layout title="store">
+	<Card className="h-full flex-1 p-3">
+		<h1>el juego es : {data.Name}</h1>
+	</Card>
+</Layout>

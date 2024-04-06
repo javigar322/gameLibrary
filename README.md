@@ -1,54 +1,45 @@
-# Astro Starter Kit: Basics
+# GAME LIBRARY
 
-```sh
-npm create astro@latest -- --template basics
-```
+#### Curso Escolar 2023-2024
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+#### Autor: [Javier García Rodríguez](https://github.com/javigar322)
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+#### Tutor: [Mónica María Marcos Gutiérrez](https://github.com/monicamg12)
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+#### Fecha de Inicio: 18-03-2024
 
-## 🚀 Project Structure
+#### Fecha de Finalización: 05-06-2024
 
-Inside of your Astro project, you'll see the following folders and files:
+## Breve descripción del proyecto
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── components/
-│   │   └── Card.astro
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+Cada vez más la comunidad de jugadores ha estado creciendo y con ello también
+sus respectivas bibliotecas de videojuegos, antes simplemente tenías los
+videojuegos en físico , pero cada vez más el uso del formato digital
+se está usando más que el formato físico , no solo estos , sino que
+además sus juegos están en diferentes consolas y no pueden
+llevar el seguimiento de estos.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+por estas razones he creado la **la biblioteca de videojuegos** ,
+un espacio para mantener de forma organizada tus videojuegos y
+así también la capacidad de encontrar nuevas experiencias
+que jugar y entretenerte , poder comentar e incluso ponerle
+puntuación.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Definir el objetivo de la aplicación
 
-Any static assets, like images, can be placed in the `public/` directory.
+Organizar de forma sencilla tu biblioteca de videojuegos:
 
-## 🧞 Commands
+- **¿Qué va a hacer la aplicación?** La aplicación te permitirá
+  añadir juegos a tu biblioteca , comentarlos y ponerle una puntuación.
+- **¿Cuál es su atractivo principal?** Su atractivo principal
+  es de forma sencilla organizar todo lo que juegas.
+- **¿Qué problema concreto va a resolver?** te facilita el
+  mantener todo lo que juegas y descubrir nuevos juegos
+- **¿Qué necesidad va a cubrir?** Cubre la necesidad de
+  mantener una simple organización y compartirlo con los demás
 
-All commands are run from the root of the project, from a terminal:
+## Prototipo de la interfaz de usuario
 
-| Command                    | Action                                           |
-| :------------------------- | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm run dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm run build`           | Build your production site to `./dist/`          |
-| `pnpm run preview`         | Preview your build locally, before deploying     |
-| `pnpm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+A partir del siguiente enlace de figma se encuentra
+el mockup en que se ha basado para hacer la aplicación :
+https://www.figma.com/file/QjtoXNTGeFBPG2bLMK65J6/gameLibrary?type=design&node-id=102-1175&mode=design&t=7VC5cMFDD7cLo04X-0

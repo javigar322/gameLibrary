@@ -9,15 +9,16 @@ import {
 const { signIn, signOut } = await import("auth-astro/client")
 
 export function UserMenu(props) {
+	// permite que un usuario inicie sesión en la aplicación con su cuenta de Twitch
 	const handleClickLogin = async (event) => {
 		event.stopPropagation()
 		await signIn("twitch")
 	}
+	// permite que un usuario cierre su sesión en la aplicación
 	const handleClickLogout = async (event) => {
 		event.stopPropagation()
 		await signOut()
 	}
-	console.log(props.data)
 	if (!props.data) {
 		return <p onClick={handleClickLogin}> {props.usuario} </p>
 	}

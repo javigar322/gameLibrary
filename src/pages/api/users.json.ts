@@ -1,6 +1,8 @@
-import type { APIRoute } from "astro"
-import { createUser, getAllUsers } from "@/lib/users"
+import { type APIRoute } from "astro"
+import { createUser, getAllUsers } from "@/db/users"
+import { getSession } from "auth-astro/server"
 
+// obtener todos los usuarios
 export const GET: APIRoute = async ({}) => {
 	const users = await getAllUsers()
 	if (!users) {
@@ -14,10 +16,16 @@ export const GET: APIRoute = async ({}) => {
 	})
 }
 
-export const Post: APIRoute = async ({ request }) => {
-	const newUser = await request.json()
-	const user = await createUser(newUser)
-	return new Response(JSON.stringify(user), {
-		status: 200,
-	})
+// crear el usuario
+export const POST: APIRoute = async ({ request }) => {
+	const session = await getSession(request)
+	const sessionUser = session?.user?.id
+	if (!sessionUser) {
+		return new Response(null, {
+			status: 401,
+			statusText: "Unauthorized",
+		})
+	}
+	const user = await createUser(sessionUser)
+	return new Response(JSON.stringify(user))
 }
