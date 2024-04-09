@@ -19,7 +19,7 @@ export const GET: APIRoute = async ({}) => {
 // crear el usuario
 export const POST: APIRoute = async ({ request }) => {
 	const session = await getSession(request)
-	const sessionUser = session?.user?.id
+	const sessionUser = session?.user?.email
 	if (!sessionUser) {
 		return new Response(null, {
 			status: 401,
@@ -27,5 +27,7 @@ export const POST: APIRoute = async ({ request }) => {
 		})
 	}
 	const user = await createUser(sessionUser)
-	return new Response(JSON.stringify(user))
+	return new Response(JSON.stringify(user), {
+		status: 200,
+	})
 }

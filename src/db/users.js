@@ -6,9 +6,8 @@ export const getAllUsers = async () => {
 }
 
 export const createUser = async (userSession) => {
-	const user_found = await (await Users()).findOne({ id: userSession.id })
+	const user_found = await (await Users()).findOne({ email: userSession })
 	if (user_found) return null
-	const insert = await (await Users()).insertOne({ id: userSession.id })
-	console.log("el usuario es : " + userSession.id)
+	const insert = await (await Users()).insertOne({ email: userSession })
 	return insert
 }

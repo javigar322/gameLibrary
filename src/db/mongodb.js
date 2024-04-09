@@ -41,3 +41,8 @@ export const Games = async () => {
 	const db = await getDB()
 	return db.collection("games")
 }
+
+export const Reviews = async () => {
+	const db = await getDB()
+	return db.collection("reviews")
+}

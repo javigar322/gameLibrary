@@ -31,6 +31,6 @@ export interface Game {
 	"Categories": string
 	"Genres": string
 	"Tags": string
-	"Screenshots": string[]
+	"Screenshots": string
 	"Movies": string
 }

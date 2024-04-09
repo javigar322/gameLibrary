@@ -12,11 +12,22 @@ export function UserMenu(props) {
 	// permite que un usuario inicie sesión en la aplicación con su cuenta de Twitch
 	const handleClickLogin = async (event) => {
 		event.stopPropagation()
-		await signIn("twitch")
+		try {
+			await signIn("twitch")
+			await fetch("/api/users.json", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+			})
+		} catch (error) {
+			console.error("Failed to sign in", error)
+		}
 	}
 	// permite que un usuario cierre su sesión en la aplicación
 	const handleClickLogout = async (event) => {
 		event.stopPropagation()
+
 		await signOut()
 	}
 	if (!props.data) {
