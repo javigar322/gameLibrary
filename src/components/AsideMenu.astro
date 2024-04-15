@@ -5,8 +5,8 @@ import { Gamepad2, User, Search, Library } from "lucide-react"
 import { SideSearch } from "@/components/SideSearch"
 import { UserMenu } from "@/components/UserAsideMenu"
 
-import { getSession } from "auth-astro/server"
 import { Image } from "astro:assets"
+import { getSession } from "auth-astro/server"
 
 const session = await getSession(Astro.request)
 const iniciado = session ? true : false

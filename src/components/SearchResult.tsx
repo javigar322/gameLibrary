@@ -9,7 +9,7 @@ export function SearchResult() {
 	const [offset, setOffset] = useState(0)
 
 	const loadMore = async () => {
-		const res = await fetch(`/api/games.json?offset=${offset}`)
+		const res = await fetch(`/api/games/games.json?offset=${offset}`)
 		const newGames = await res.json()
 		setGames((prevGames) => [...prevGames, ...newGames])
 		setOffset((prevOffset) => prevOffset + 8)
@@ -17,7 +17,7 @@ export function SearchResult() {
 
 	useEffect(() => {
 		const fetchGames = async () => {
-			const res = await fetch(`/api/games.json?offset=${offset}`)
+			const res = await fetch(`/api/games/games.json?offset=${offset}`)
 			const initialGames = await res.json()
 			setGames(initialGames)
 			setOffset((prevOffset) => prevOffset + 8)

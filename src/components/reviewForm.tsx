@@ -8,7 +8,7 @@ export function ReviewForm() {
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault()
 		const formData = new FormData(e.target as HTMLFormElement)
-		const response = await fetch("http://localhost:4321/api/review.json", {
+		const response = await fetch("/api/reviews/review.json", {
 			method: "POST",
 			body: formData,
 		})

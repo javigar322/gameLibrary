@@ -6,7 +6,7 @@ export function GameStore(props: any) {
 
 	useEffect(() => {
 		const fetchGame = async (): Promise<Game> => {
-			const response = await fetch(`/api/gameId.json?${props.id}`)
+			const response = await fetch(`/api/games/gameId.json?${props.id}`)
 			const data = await response.json()
 			console.log(data)
 			return data

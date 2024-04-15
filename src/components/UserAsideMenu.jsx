@@ -14,12 +14,6 @@ export function UserMenu(props) {
 		event.stopPropagation()
 		try {
 			await signIn("twitch")
-			await fetch("/api/users.json", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-			})
 		} catch (error) {
 			console.error("Failed to sign in", error)
 		}
