@@ -1,0 +1,68 @@
+---
+const { title } = Astro.props
+import { getSession } from "auth-astro/server"
+import Footer from "@/components/Footer.astro"
+import { Image } from "astro:assets"
+import { Gamepad2 } from "lucide-react"
+import "@/styles/globals.css"
+const session = await getSession(Astro.request)
+---
+
+<!doctype html>
+<html lang="es" class="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" /><meta
+			name="generator"
+			content={Astro.generator}
+		/></head
+	>
+
+	<body>
+		<div id="app" class="relative h-screen gap-2 p-2">
+			<header class="flex h-auto flex-row items-center justify-between border-b [grid-area:header]">
+				<nav class="">
+					<h1 class="m-2 font-bold">
+						<a href="/" class="flex flex-row gap-2"><Gamepad2 />GAMELIBRARY</a>
+					</h1>
+				</nav>
+				<div class="flex flex-row gap-2">
+					<p class="">{session?.user?.name}</p>
+					<Image
+						src={session?.user?.image as string}
+						alt={session?.user?.name as string}
+						class={"rounded-full object-cover"}
+						width={24}
+						height={24}
+						decoding="async"
+						loading="eager"
+					/>
+				</div>
+			</header>
+
+			<main class="w-full [grid-area:main]">
+				<slot />
+			</main>
+
+			<footer class="h-auto [grid-area:footer]">
+				<Footer />
+			</footer>
+		</div>
+	</body>
+
+	<style>
+		#app {
+			display: grid;
+			grid-template-areas:
+				"header header header"
+				"main main main"
+				"footer footer footer ";
+			grid-template-columns: 1fr;
+			grid-template-rows: minmax(50px, auto) 1fr minmax(50px, auto);
+		}
+	</style>
+	<style is:global></style>
+</html>

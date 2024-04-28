@@ -1,0 +1,36 @@
+---
+import Footer from "@/components/Footer.astro"
+import { Card } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import "@/styles/globals.css"
+---
+
+<!doctype html>
+<html lang="es" class="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<title>Not Found</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" /><meta
+			name="generator"
+			content={Astro.generator}
+		/></head
+	>
+	<Card className="flex w-full flex-1">
+		<div class="content-center">
+			<h1 class="text-4xl font-bold">⭐ 404 ⭐</h1>
+			<p class="text-lg">PAGE NOT FOUND</p>
+			<Button className="mb-5">Return to main page</Button>
+		</div>
+	</Card>
+	<Footer />
+
+	<script>
+		const button = document.querySelector("button")
+		button?.addEventListener("click", () => {
+			window.location.href = "/"
+		})
+	</script>
+
+</html>

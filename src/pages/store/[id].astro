@@ -6,9 +6,10 @@ import { Image } from "astro:assets"
 import { Carrusel } from "@/components/carrusel"
 import { Button } from "@/components/ui/button"
 import { ReviewForm } from "@/components/reviewForm"
+import { AddToLibrary } from "@/components/addToLibrary"
 
 const { id } = Astro.params
-const response = await fetch(`http://localhost:4321/api/gameId.json?id=${id}`)
+const response = await fetch(`http://localhost:4321/api/games/gameId.json?id=${id}`)
 const data: Game = await response.json()
 const urlsArray = data.Screenshots.split(",")
 ---
@@ -19,8 +20,8 @@ const urlsArray = data.Screenshots.split(",")
 			<div class="flex h-[450] w-[800px] flex-col space-y-5">
 				<Carrusel client:load urls={urlsArray} />
 				<div class="w-full flex-row">
-					<Button variant={"secondary"}> Añadir a la lista de deseos</Button>
-					<Button className="ml-5" variant={"default"}> Añadir a la tu biblioteca</Button>
+					<Button client:load variant={"secondary"}> Añadir a la lista de deseos</Button>
+					<AddToLibrary client:load added={false} id={id} />
 				</div>
 				<h1 class="">Reseñas</h1>
 				<ReviewForm client:load />

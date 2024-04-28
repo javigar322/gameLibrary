@@ -15,19 +15,3 @@ export const GET: APIRoute = async ({}) => {
 		status: 200,
 	})
 }
-
-// crear el usuario
-export const POST: APIRoute = async ({ request }) => {
-	const session = await getSession(request)
-	const sessionUser = session?.user?.email
-	if (!sessionUser) {
-		return new Response(null, {
-			status: 401,
-			statusText: "Unauthorized",
-		})
-	}
-	const user = await createUser(sessionUser)
-	return new Response(JSON.stringify(user), {
-		status: 200,
-	})
-}
