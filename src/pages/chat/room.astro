@@ -51,7 +51,7 @@ const session = await getSession(Astro.request)
 	}
 </style>
 
-<Layout>
+<Layout title="room">
 	<Card client:load className="relative h-full w-full flex-1">
 		<ul
 			class="m-0 h-full list-none overflow-hidden overflow-y-scroll scroll-smooth p-[48px] text-foreground"
@@ -65,7 +65,7 @@ const session = await getSession(Astro.request)
 				name="message"
 				id="input"
 				placeholder="Type a message"
-				className="m-1 flex-1"
+				className="m-1 flex-1 focus:outline-none"
 			/>
 			<Button client:load type="submit">Enviar</Button>
 		</form>

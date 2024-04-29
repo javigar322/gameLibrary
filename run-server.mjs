@@ -44,8 +44,11 @@ const Message = mongoose.model(
 	"Message",
 	new mongoose.Schema({
 		_id: Number,
-		message: String,
-		username: String,
+		message: String, // Contenido del mensaje
+		username: String, // Nombre del usuario que envió el mensaje
+		sender: String, // ID del usuario que envió el mensaje
+		recipient: String, // ID del usuario que debe recibir el mensaje
+		chat: String, // ID del chat al que pertenece el mensaje
 	})
 )
 

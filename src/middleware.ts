@@ -13,5 +13,12 @@ export const onRequest = defineMiddleware(async (context, next) => {
 			return Response.redirect(new URL("/404", context.url))
 		}
 	}
+	if (context.url.pathname.startsWith("/chat")) {
+		if (userFound) {
+			return next()
+		} else {
+			return Response.redirect(new URL("/404", context.url))
+		}
+	}
 	return next()
 })
