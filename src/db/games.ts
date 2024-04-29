@@ -1,10 +1,11 @@
 import { Games } from "./mongodb"
 
+export const getGames = async () => {
+	const game = await (await Games()).find({}).toArray()
+	return game
+}
+
 export const getAllGames = async (offset: number = 0) => {
-	if (!offset) {
-		const game = await (await Games()).find({}).toArray()
-		return game
-	}
 	const game = await (await Games()).find({}).skip(offset).limit(8).toArray()
 	return game
 }

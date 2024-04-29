@@ -1,6 +1,5 @@
 import { type APIRoute } from "astro"
-import { createUser, getAllUsers } from "@/db/users"
-import { getSession } from "auth-astro/server"
+import { getAllUsers } from "@/db/users"
 
 // obtener todos los usuarios
 export const GET: APIRoute = async ({}) => {

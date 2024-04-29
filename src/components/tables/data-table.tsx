@@ -57,13 +57,23 @@ export function DataTable<TData, TValue>({ columns, data }: DataTableProps<TData
 		},
 	})
 
+	function typeColumn() {
+		if (table.getColumn("Name")) {
+			return "Name"
+		}
+		if (table.getColumn("username")) {
+			return "username"
+		}
+		return ""
+	}
+
 	return (
 		<div>
 			<div className="flex items-center py-4">
 				<Input
 					placeholder="Filter Names..."
-					value={(table.getColumn("Name")?.getFilterValue() as string) ?? ""}
-					onChange={(event) => table.getColumn("Name")?.setFilterValue(event.target.value)}
+					value={(table.getColumn(typeColumn())?.getFilterValue() as string) ?? ""}
+					onChange={(event) => table.getColumn(typeColumn())?.setFilterValue(event.target.value)}
 					className="max-w-sm"
 				/>
 				<DropdownMenu>

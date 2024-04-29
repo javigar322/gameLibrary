@@ -11,17 +11,19 @@ export const getUser = async (userId) => {
 	return user
 }
 
-export const createUser = async (userId) => {
-	const user_found = await (await Users()).findOne({ uid: userId })
+export const createUser = async (user) => {
+	const user_found = await (await Users()).findOne({ uid: user.id })
 	if (user_found) return
-	return await (await Users()).insertOne({ uid: userId, role: "user" })
+	return await (
+		await Users()
+	).insertOne({ uid: user.id, email: user.email, username: user.name, role: "user" })
 }
 
-export const addGameToLibrary = async (appId, userId) => {
-	await createUser(userId)
+export const addGameToLibrary = async (appId, user) => {
+	await createUser(user)
 	const update_user = await (
 		await Users()
-	).updateOne({ uid: userId }, { $addToSet: { biblioteca: appId } })
+	).updateOne({ uid: user.id }, { $addToSet: { biblioteca: appId } })
 	return update_user
 }
 

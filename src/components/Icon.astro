@@ -5,7 +5,7 @@ interface Props {
 }
 
 const { href, nameI } = Astro.props
-import { SiGithub, SiTwitter } from "@icons-pack/react-simple-icons"
+import { Github, Twitter } from "lucide-react"
 ---
 
 <a
@@ -17,8 +17,8 @@ import { SiGithub, SiTwitter } from "@icons-pack/react-simple-icons"
 >
 	{
 		{
-			SiGithub: <SiGithub />,
-			SiTwitter: <SiTwitter />,
+			SiGithub: <Github />,
+			SiTwitter: <Twitter />,
 			// Agrega más iconos según sea necesario
 		}[nameI]
 	}

@@ -46,3 +46,8 @@ export const Reviews = async () => {
 	const db = await getDB()
 	return db.collection("reviews")
 }
+
+export const Messages = async () => {
+	const db = await getDB()
+	return db.collection("messages")
+}

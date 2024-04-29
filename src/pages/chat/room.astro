@@ -1,0 +1,73 @@
+---
+import { Card } from "@/components/ui/card"
+import Layout from "@/layouts/Layout.astro"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { getSession } from "auth-astro/server"
+const session = await getSession(Astro.request)
+---
+
+<!-- Almacenar los datos de la sesión en un atributo 'data-' -->
+<div id="session-data" data-session={JSON.stringify(session)} style="display: none;"></div>
+
+<script type="module">
+	import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
+
+	const session = JSON.parse(document.querySelector("#session-data").dataset.session)
+	const socket = io({
+		auth: {
+			username: session.user.name,
+			serverOffset: 0,
+		},
+	})
+	const form = document.getElementById("form")
+	const input = document.getElementById("input")
+	const message = document.getElementById("message")
+
+	socket.on("chat message", (msg, serverOffset, username) => {
+		const item = `<li>
+				<p>${msg}</p>
+				<small>${username}</small>
+			</li>`
+		message.insertAdjacentHTML("beforeend", item)
+		socket.auth.serverOffset = serverOffset
+		// scroll to bottom
+		message.scrollTop = message.scrollHeight
+	})
+
+	form.addEventListener("submit", (e) => {
+		e.preventDefault()
+
+		if (input.value) {
+			socket.emit("chat message", input.value)
+			input.value = ""
+		}
+	})
+</script>
+
+<style>
+	#message > li {
+		padding: 0.5rem 1rem;
+	}
+</style>
+
+<Layout>
+	<Card client:load className="relative h-full w-full flex-1">
+		<ul
+			class="m-0 h-full list-none overflow-hidden overflow-y-scroll scroll-smooth p-[48px] text-foreground"
+			id="message"
+		>
+		</ul>
+		<form id="form" class="absolute bottom-0 left-0 right-0 flex h-[48px]">
+			<Input
+				client:load
+				type="text"
+				name="message"
+				id="input"
+				placeholder="Type a message"
+				className="m-1 flex-1"
+			/>
+			<Button client:load type="submit">Enviar</Button>
+		</form>
+	</Card>
+</Layout>

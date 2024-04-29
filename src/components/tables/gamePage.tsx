@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react"
-import { columns } from "./columns"
+import { columns } from "./gameColumns"
 import type { Game } from "@/types/game"
 import { DataTable } from "./data-table"
 
-export function DemoPage() {
+export function GamePage() {
 	const [data, setData] = useState<Game[]>([])
 
 	useEffect(() => {

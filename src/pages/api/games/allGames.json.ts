@@ -1,9 +1,9 @@
 import type { APIRoute } from "astro"
-import { getAllGames } from "@/db/games"
+import { getGames } from "@/db/games"
 
 // devuelve todos los juegos por páginas
 export const GET: APIRoute = async ({ request }) => {
-	const games = await getAllGames()
+	const games = await getGames()
 	console.log("hola")
 	if (!games) {
 		return new Response(null, {

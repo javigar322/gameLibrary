@@ -27,14 +27,14 @@ export const POST: APIRoute = async ({ request }) => {
 	const id = Number(searchParams.get("id") ?? null)
 	const game_found = await getGame(id)
 	const session = await getSession(request)
-	const userId = session?.user?.id
-	if (!game_found || !userId) {
+	const user = session?.user
+	if (!game_found || !user) {
 		return new Response(null, {
 			status: 404,
 			statusText: "Not found",
 		})
 	}
-	const newGame = await addGameToLibrary(id, userId)
+	const newGame = await addGameToLibrary(id, user)
 	return new Response(JSON.stringify(newGame), {
 		status: 200,
 	})
