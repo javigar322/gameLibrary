@@ -41,7 +41,7 @@ const getNextSequenceValue = async (sequenceName) => {
 
 // Modificar el modelo de mensaje para incluir un ID
 const Message = mongoose.model(
-	"Message",
+	"Messages",
 	new mongoose.Schema({
 		_id: Number,
 		message: String, // Contenido del mensaje
@@ -52,12 +52,27 @@ const Message = mongoose.model(
 	})
 )
 
+const User = mongoose.model(
+	"Users",
+	new mongoose.Schema({
+		uid: String,
+		email: String,
+		username: String,
+		role: String,
+		connected: Boolean,
+		userImage: String,
+	})
+)
+
 // Modificar la función createMessage para usar el nuevo ID
-const createMessage = async (message, username) => {
+const createMessage = async (message, username, senderId, recipientId, chatId) => {
 	const newMessage = new Message({
 		_id: await getNextSequenceValue("messageId"),
 		message: message,
 		username: username,
+		sender: senderId,
+		recipient: recipientId,
+		chat: chatId,
 	})
 	return await newMessage.save()
 }
@@ -65,25 +80,63 @@ const createMessage = async (message, username) => {
 const getMessages = async (id) => {
 	return await Message.find({ _id: { $gt: id } })
 }
+const getChat = async (chatId) => {
+	return await Message.find({ chat: chatId })
+}
+const getRecipient = async (chatId) => {
+	const chat = await Message.findOne({ chat: chatId })
+	if (chat) {
+		return chat.recipient
+	} else {
+		// Devuelve un valor predeterminado o lanza un error si no se encuentra el chat
+		throw new Error(`No se encontró el chat con el ID ${chatId}`)
+	}
+}
+// obtener el usuario
+const getUser = async (uid) => {
+	return await User.findById(uid)
+}
+// conectar al usuario
+const connectUser = async (uid) => {
+	return await User.updateOne({ uid: uid }, { connected: true })
+}
+// desconectar al usuario
+const disconnectUser = async (uid) => {
+	return await User.updateOne({ uid: uid }, { connected: false })
+}
 // conectar con el socket
 io.on("connection", async (socket) => {
 	console.log("a user connected")
 
+	// Obtener el ID del usuario
+	const userId = socket.handshake.auth.uid
+
+	// Conectar al usuario
+	if (userId) {
+		await connectUser(userId)
+	}
+
+	// Desconectar al usuario
 	socket.on("disconnect", () => {
 		console.log("user disconnected")
+		if (userId) {
+			disconnectUser(userId)
+		}
 	})
 
 	// crear los mensajes
 	socket.on("chat message", async (msg) => {
 		let result
 		const username = socket.handshake.auth.username ?? "Anonymous"
+		const chat = socket.handshake.auth.chat
+		const recipient = await getRecipient(chat)
 		try {
-			result = await createMessage(msg, username)
+			result = await createMessage(msg, username, userId, recipient, chat)
 		} catch (err) {
 			console.error(err)
 			return
 		}
-		io.emit("chat message", msg, result._id, username)
+		socket.to(chat).emit("chat message", msg, result._id, username)
 	})
 
 	if (!socket.recovered) {
@@ -93,7 +146,7 @@ io.on("connection", async (socket) => {
 			const results = await getMessages(id)
 
 			results.forEach((res) => {
-				socket.emit("chat message", res.message, res._id, res.username)
+				socket.to("chat message", res.message, res._id, res.username)
 			})
 		} catch (err) {
 			console.error(err)

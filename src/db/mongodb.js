@@ -51,3 +51,8 @@ export const Messages = async () => {
 	const db = await getDB()
 	return db.collection("messages")
 }
+
+export const Counter = async () => {
+	const db = await getDB()
+	return db.collection("counter")
+}

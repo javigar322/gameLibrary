@@ -16,7 +16,14 @@ export const createUser = async (user) => {
 	if (user_found) return
 	return await (
 		await Users()
-	).insertOne({ uid: user.id, email: user.email, username: user.name, role: "user" })
+	).insertOne({
+		uid: user.id,
+		email: user.email,
+		username: user.name,
+		role: "user",
+		connected: false,
+		userImage: user.image,
+	})
 }
 
 export const addGameToLibrary = async (appId, user) => {

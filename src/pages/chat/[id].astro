@@ -1,23 +1,30 @@
 ---
 import { Card } from "@/components/ui/card"
-import Layout from "@/layouts/Layout.astro"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { getSession } from "auth-astro/server"
+import ChatLayout from "@/layouts/ChatLayout.astro"
 const session = await getSession(Astro.request)
+const id = Astro.params.id
 ---
 
 <!-- Almacenar los datos de la sesión en un atributo 'data-' -->
 <div id="session-data" data-session={JSON.stringify(session)} style="display: none;"></div>
+<div id="session-id" data-id={JSON.stringify(id)} style="display: none;"></div>
 
 <script type="module">
 	import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
 
 	const session = JSON.parse(document.querySelector("#session-data").dataset.session)
+	const chatId = JSON.parse(document.querySelector("#session-id").dataset.id)
+
 	const socket = io({
 		auth: {
 			username: session.user.name,
+			uid: session.user.id,
+			chatId: chatId,
 			serverOffset: 0,
+			connected: false,
 		},
 	})
 	const form = document.getElementById("form")
@@ -26,9 +33,9 @@ const session = await getSession(Astro.request)
 
 	socket.on("chat message", (msg, serverOffset, username) => {
 		const item = `<li>
-				<p>${msg}</p>
-				<small>${username}</small>
-			</li>`
+			<p>${msg}</p>
+			<small>${username}</small>
+		</li>`
 		message.insertAdjacentHTML("beforeend", item)
 		socket.auth.serverOffset = serverOffset
 		// scroll to bottom
@@ -39,7 +46,7 @@ const session = await getSession(Astro.request)
 		e.preventDefault()
 
 		if (input.value) {
-			socket.emit("chat message", input.value)
+			socket.emit("chat message", input.value, chatId)
 			input.value = ""
 		}
 	})
@@ -51,7 +58,7 @@ const session = await getSession(Astro.request)
 	}
 </style>
 
-<Layout title="room">
+<ChatLayout title="room">
 	<Card client:load className="relative h-full w-full flex-1">
 		<ul
 			class="m-0 h-full list-none overflow-hidden overflow-y-scroll scroll-smooth p-[48px] text-foreground"
@@ -70,4 +77,4 @@ const session = await getSession(Astro.request)
 			<Button client:load type="submit">Enviar</Button>
 		</form>
 	</Card>
-</Layout>
+</ChatLayout>

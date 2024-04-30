@@ -4,5 +4,8 @@ export interface User {
 	email: string
 	username: string
 	role: string
-	biblioteca: number[]
+	userImage: string
+	connected: boolean
+	chatId?: string[]
+	biblioteca?: number[]
 }

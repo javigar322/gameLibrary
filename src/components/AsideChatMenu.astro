@@ -1,7 +1,11 @@
 ---
 import { Card } from "@/components/ui/card"
 import AsideMenuItem from "@/components/AsideMenuItem.astro"
-import { Gamepad2, User, Search, Library } from "lucide-react"
+import type { User } from "@/types/user"
+import { Plus } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { CreateChat } from "@/components/create-chat"
+import { Gamepad2, Search, User2, Library } from "lucide-react"
 import { SideSearch } from "@/components/SideSearch"
 import { UserMenu } from "@/components/UserAsideMenu"
 
@@ -10,10 +14,11 @@ import { getSession } from "auth-astro/server"
 
 const session = await getSession(Astro.request)
 const iniciado = session ? true : false
+const response = await fetch(`http://localhost:4321/api/chats/chats.json`)
+const users = await response.json()
 ---
 
 <nav class="flex flex-1 flex-col gap-2">
-	<!-- carta de arriba -->
 	<Card>
 		<AsideMenuItem href="/">
 			<Gamepad2 />
@@ -31,7 +36,7 @@ const iniciado = session ? true : false
 					<p> {session.user?.name}</p>
 				) : (
 					<AsideMenuItem slot="usuario">
-						<User /> User{" "}
+						<User2 /> User{" "}
 					</AsideMenuItem>
 				)
 			}
@@ -48,7 +53,7 @@ const iniciado = session ? true : false
 							loading="eager"
 						/>
 					) : (
-						<User />
+						<User2 />
 					)
 				}
 				{session ? <p> {session.user?.name}</p> : <p id="login-button"> User </p>}
@@ -57,15 +62,24 @@ const iniciado = session ? true : false
 		</UserMenu>
 		<!-- Menu del usuario -->
 	</Card>
-	<!-- carta de abajo -->
-	<Card className="flex-1 ">
-		<AsideMenuItem href="/">
-			<Library />
-			Mi biblioteca
+	<Card client:load>
+		<AsideMenuItem>
+			<div class="flex w-full justify-between">
+				<p class="flex items-center">mensajes directos</p>
+				<CreateChat client:load />
+			</div>
 		</AsideMenuItem>
-
-		<SideSearch client:load />
+		{
+			!users ? (
+				<p>not found</p>
+			) : (
+				users.map((user: any) => (
+					<AsideMenuItem href={`chat/${user.chatId}`}>
+						<img src={user.userImage} alt="imagen del usuario" />
+						{user.username}
+					</AsideMenuItem>
+				))
+			)
+		}
 	</Card>
 </nav>
-
-<script></script>

@@ -1,0 +1,50 @@
+---
+const { title } = Astro.props
+import Footer from "@/components/Footer.astro"
+import AsideChatMenu from "@/components/AsideChatMenu.astro"
+import { Toaster } from "@/components/ui/toaster"
+import "@/styles/globals.css"
+---
+
+<!doctype html>
+<html lang="es" class="dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<title>{title}</title>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" /><meta
+			name="generator"
+			content={Astro.generator}
+		/></head
+	>
+
+	<body>
+		<div id="app" class="relative h-screen gap-2 p-2">
+			<aside class="flex flex-col overflow-y-hidden [grid-area:aside]">
+				<AsideChatMenu />
+			</aside>
+
+			<main class="w-full overflow-y-hidden [grid-area:main]">
+				<slot />
+				<Toaster client:load />
+			</main>
+
+			<footer class="h-auto [grid-area:footer]">
+				<Footer />
+			</footer>
+		</div>
+	</body>
+
+	<style>
+		#app {
+			display: grid;
+			grid-template-areas:
+				"aside main main"
+				"footer footer footer ";
+			grid-template-columns: 350px 1fr;
+			grid-template-rows: 1fr auto;
+		}
+	</style>
+	<style is:global></style>
+</html>
