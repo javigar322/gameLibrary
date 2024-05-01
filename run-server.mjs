@@ -20,35 +20,17 @@ const io = new Server(server, {
 
 await mongoose.connect(process.env.MONGODB_URI + "/astro-mongodb")
 
-// Crear un nuevo modelo para el contador
-const Counter = mongoose.model(
-	"Counter",
-	new mongoose.Schema({
-		_id: { type: String, required: true },
-		seq: { type: Number, default: 0 },
-	})
-)
-
-// Crear una función para obtener el siguiente ID
-const getNextSequenceValue = async (sequenceName) => {
-	const counter = await Counter.findByIdAndUpdate(
-		sequenceName,
-		{ $inc: { seq: 1 } },
-		{ new: true, upsert: true }
-	)
-	return counter.seq
-}
-
 // Modificar el modelo de mensaje para incluir un ID
 const Message = mongoose.model(
 	"Messages",
 	new mongoose.Schema({
-		_id: Number,
+		_id: Number, // ID del mensaje
 		message: String, // Contenido del mensaje
 		username: String, // Nombre del usuario que envió el mensaje
 		sender: String, // ID del usuario que envió el mensaje
 		recipient: String, // ID del usuario que debe recibir el mensaje
 		chat: String, // ID del chat al que pertenece el mensaje
+		createdAt: { type: Date, default: Date.now }, // Fecha de creación del mensaje
 	})
 )
 
@@ -64,10 +46,15 @@ const User = mongoose.model(
 	})
 )
 
+// Crear una función para obtener el siguiente ID
+const getNextSequenceValue = async () => {
+	return await Message.countDocuments()
+}
+
 // Modificar la función createMessage para usar el nuevo ID
 const createMessage = async (message, username, senderId, recipientId, chatId) => {
 	const newMessage = new Message({
-		_id: await getNextSequenceValue("messageId"),
+		_id: await getNextSequenceValue(),
 		message: message,
 		username: username,
 		sender: senderId,
@@ -78,13 +65,13 @@ const createMessage = async (message, username, senderId, recipientId, chatId) =
 }
 // obtener los mensajes
 const getMessages = async (id) => {
-	return await Message.find({ _id: { $gt: id } })
+	return await Message.find({ chat: id }).sort({ createdAt: 1 }) // Ordenar por el campo de timestamp
 }
 const getChat = async (chatId) => {
 	return await Message.find({ chat: chatId })
 }
 const getRecipient = async (chatId) => {
-	const chat = await Message.findOne({ chat: chatId })
+	const chat = await Message.find({ chat: chatId })
 	if (chat) {
 		return chat.recipient
 	} else {
@@ -110,6 +97,10 @@ io.on("connection", async (socket) => {
 
 	// Obtener el ID del usuario
 	const userId = socket.handshake.auth.uid
+	const chat = socket.handshake.auth.chatId
+
+	// Unirse a la sala de chat
+	socket.join(chat)
 
 	// Conectar al usuario
 	if (userId) {
@@ -128,7 +119,7 @@ io.on("connection", async (socket) => {
 	socket.on("chat message", async (msg) => {
 		let result
 		const username = socket.handshake.auth.username ?? "Anonymous"
-		const chat = socket.handshake.auth.chat
+		const chat = socket.handshake.auth.chatId
 		const recipient = await getRecipient(chat)
 		try {
 			result = await createMessage(msg, username, userId, recipient, chat)
@@ -142,11 +133,10 @@ io.on("connection", async (socket) => {
 	if (!socket.recovered) {
 		// <-- Recuperar los mensajes anteriores
 		try {
-			const id = socket.handshake.auth.serverOffset ?? 0
-			const results = await getMessages(id)
-
-			results.forEach((res) => {
-				socket.to("chat message", res.message, res._id, res.username)
+			const chatId = socket.handshake.auth.chatId
+			const results = await getMessages(chatId)
+			results.forEach((result) => {
+				socket.emit("chat message", result.message, result._id, result.username)
 			})
 		} catch (err) {
 			console.error(err)

@@ -1,21 +1,15 @@
 ---
 import { Card } from "@/components/ui/card"
 import AsideMenuItem from "@/components/AsideMenuItem.astro"
-import type { User } from "@/types/user"
-import { Plus } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { CreateChat } from "@/components/create-chat"
-import { Gamepad2, Search, User2, Library } from "lucide-react"
-import { SideSearch } from "@/components/SideSearch"
+import { CreateChat } from "@/components/chats/create-chat"
+import { Gamepad2, Search, User2 } from "lucide-react"
 import { UserMenu } from "@/components/UserAsideMenu"
-
 import { Image } from "astro:assets"
 import { getSession } from "auth-astro/server"
+import { UserChats } from "@/components/chats/userChats"
 
 const session = await getSession(Astro.request)
 const iniciado = session ? true : false
-const response = await fetch(`http://localhost:4321/api/chats/chats.json`)
-const users = await response.json()
 ---
 
 <nav class="flex flex-1 flex-col gap-2">
@@ -64,22 +58,11 @@ const users = await response.json()
 	</Card>
 	<Card client:load>
 		<AsideMenuItem>
-			<div class="flex w-full justify-between">
+			<div class="flex w-full flex-1 justify-between">
 				<p class="flex items-center">mensajes directos</p>
 				<CreateChat client:load />
 			</div>
 		</AsideMenuItem>
-		{
-			!users ? (
-				<p>not found</p>
-			) : (
-				users.map((user: any) => (
-					<AsideMenuItem href={`chat/${user.chatId}`}>
-						<img src={user.userImage} alt="imagen del usuario" />
-						{user.username}
-					</AsideMenuItem>
-				))
-			)
-		}
+		<UserChats client:load />
 	</Card>
 </nav>

@@ -5,19 +5,18 @@ import { Button } from "@/components/ui/button"
 import { getSession } from "auth-astro/server"
 import ChatLayout from "@/layouts/ChatLayout.astro"
 const session = await getSession(Astro.request)
-const id = Astro.params.id
+const { id } = Astro.params
 ---
 
 <!-- Almacenar los datos de la sesión en un atributo 'data-' -->
 <div id="session-data" data-session={JSON.stringify(session)} style="display: none;"></div>
-<div id="session-id" data-id={JSON.stringify(id)} style="display: none;"></div>
+<div id="session-id" data-id={id}></div>
 
 <script type="module">
 	import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js"
 
 	const session = JSON.parse(document.querySelector("#session-data").dataset.session)
-	const chatId = JSON.parse(document.querySelector("#session-id").dataset.id)
-
+	const chatId = document.querySelector("#session-id").dataset.id
 	const socket = io({
 		auth: {
 			username: session.user.name,
