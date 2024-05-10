@@ -7,6 +7,7 @@ import { Carrusel } from "@/components/carrusel"
 import { Button } from "@/components/ui/button"
 import { ReviewForm } from "@/components/reviewForm"
 import { AddToLibrary } from "@/components/addToLibrary"
+import { UserReviews } from "@/components/reviews"
 
 const { id } = Astro.params
 const response = await fetch(`http://localhost:4321/api/games/gameId.json?id=${id}`)
@@ -24,7 +25,8 @@ const urlsArray = data.Screenshots.split(",")
 					<AddToLibrary client:load added={false} id={id} />
 				</div>
 				<h1 class="">Reseñas</h1>
-				<ReviewForm client:load />
+				<ReviewForm client:load id={id} />
+				<UserReviews client:load id={id} />
 			</div>
 
 			<div class="w-[450px] flex-col">

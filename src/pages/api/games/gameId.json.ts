@@ -20,7 +20,7 @@ export const GET: APIRoute = async ({ request }) => {
 	})
 }
 
-// agregar un juego por la id
+// agregar un juego a la biblioteca por la id del usuario
 export const POST: APIRoute = async ({ request }) => {
 	const { url } = request
 	const searchParams = new URL(url).searchParams

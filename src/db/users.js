@@ -37,7 +37,7 @@ export const addGameToLibrary = async (appId, user) => {
 export const removeGameFromLibrary = async (appId, userId) => {
 	const update_user = await (
 		await Users()
-	).updateOne({ id: userId }, { $pull: { biblioteca: appId } })
+	).updateOne({ uid: userId }, { $pull: { biblioteca: Number(appId) } })
 	return update_user
 }
 
@@ -47,4 +47,13 @@ export const getLibrary = async (userId) => {
 		return [] // Devuelve un array vacío si el usuario no existe
 	}
 	return user.biblioteca || [] // Devuelve la biblioteca del usuario o un array vacío si es null
+}
+
+export const checkGameInLibrary = async (appId, userId) => {
+	const user = await (await Users()).findOne({ uid: userId })
+	if (!user) {
+		return false
+	}
+	const included = user.biblioteca.includes(Number(appId))
+	return included
 }

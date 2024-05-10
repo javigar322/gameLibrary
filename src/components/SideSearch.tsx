@@ -13,9 +13,14 @@ import {
 
 import "@/styles/globals.css"
 import type { Game } from "@/types/game"
+import { useStore } from "@nanostores/react"
+import { reload } from "@/store"
+import { newGame } from "@/store"
 
 export function SideSearch() {
 	const [games, setGames] = useState<Game[]>([])
+	const $reload = useStore(reload)
+	const $newGame = useStore(newGame)
 
 	useEffect(() => {
 		const fetchGames = async () => {
@@ -24,7 +29,7 @@ export function SideSearch() {
 			setGames(initialGames)
 		}
 		fetchGames()
-	}, [])
+	}, [$reload])
 
 	return (
 		<Command style={{ maxHeight: "650px" }}>
@@ -32,7 +37,10 @@ export function SideSearch() {
 			<CommandList style={{ flex: "1", maxHeight: "650px", overflowY: "auto" }}>
 				<CommandEmpty>No results found.</CommandEmpty>
 				{games.map((game) => (
-					<CommandItem key={game.AppID}>
+					<CommandItem
+						key={game.AppID}
+						className={game.AppID === $newGame ? "animate-bouncing" : ""}
+					>
 						<a href={`/store/${game.AppID}`} className="flex w-full items-center gap-2 ">
 							<picture className="h-8 w-8 flex-none">
 								<img
