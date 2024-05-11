@@ -17,6 +17,17 @@ export default defineConfig({
 		react(),
 		auth(),
 		starlight({
+			defaultLocale: "es",
+			locales: {
+				es: {
+					label: "Español",
+					lang: "es",
+				},
+				en: {
+					label: "English",
+					lang: "en",
+				},
+			},
 			plugins: [
 				// Generate the OpenAPI documentation pages.
 				starlightOpenAPI([

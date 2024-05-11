@@ -40,19 +40,21 @@ Organizar de forma sencilla tu biblioteca de videojuegos:
 
 ## Prototipo de la interfaz de usuario
 
-A partir del siguiente enlace de figma se encuentra
+A partir del siguiente enlace de Figma se encuentra
 el mockup en que se ha basado para hacer la aplicación :
 https://www.figma.com/file/QjtoXNTGeFBPG2bLMK65J6/gameLibrary?type=design&node-id=102-1175&mode=design&t=7VC5cMFDD7cLo04X-0
 
-## Documentacion del proyecto
+## Documentación del proyecto
 
 Para poder acceder a la documentación del proyecto hay que iniciarlo
-y se creará una ruta en /api/ donde se encuentra la documentaicion
+y se creará una ruta en /api/ donde se encuentra la documentación
 de los endpoints de la restFul api, se puede iniciar el proyecto con
 
 ```
 pnpm astro dev
 ```
 
-Se puede ver una imagen del resultado de la documentacion en
-la carpeta docs con otro tipo de informacion relevante.
+Se puede ver una imagen del resultado de la documentación en
+la carpeta docs con otro tipo de información relevante, además
+toda la documentación del proyecto se podrá encontrar en formato
+md en src/content/docs/es

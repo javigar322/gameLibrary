@@ -1,5 +1,4 @@
 import { Users } from "./mongodb"
-import { Games } from "./mongodb"
 
 export const getAllUsers = async () => {
 	const users = await (await Users()).find({}).toArray()
@@ -27,7 +26,6 @@ export const createUser = async (user) => {
 }
 
 export const addGameToLibrary = async (appId, user) => {
-	await createUser(user)
 	const update_user = await (
 		await Users()
 	).updateOne({ uid: user.id }, { $addToSet: { biblioteca: appId } })
