@@ -1,0 +1,196 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Mi API de juegos
+paths:
+  /api/games/allGames.json:
+    get:
+      summary: Obtiene todos los juegos
+      description: Devuelve todos los juegos por páginas.
+      responses:
+        "200":
+          description: Una lista de juegos.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Game"
+        "404":
+          description: No se encontraron juegos.
+  /api/games/gameId.json:
+    get:
+      summary: Obtiene un juego por su ID
+      description: Devuelve un juego específico basado en su ID.
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: ID del juego.
+      responses:
+        "200":
+          description: Un juego específico.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Game"
+        "404":
+          description: Juego no encontrado.
+    post:
+      summary: Agrega un juego a la biblioteca del usuario por la ID del juego
+      description: Agrega un juego específico a la biblioteca del usuario basado en la ID del juego.
+      parameters:
+        - in: query
+          name: id
+          required: true
+          schema:
+            type: integer
+            format: int64
+          description: ID del juego.
+      responses:
+        "200":
+          description: Juego agregado a la biblioteca del usuario.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Game"
+        "404":
+          description: Juego o usuario no encontrado.
+  /api/games/games.json:
+    get:
+      summary: Obtiene todos los juegos por páginas
+      description: Devuelve todos los juegos por páginas.
+      parameters:
+        - in: query
+          name: offset
+          required: false
+          schema:
+            type: integer
+            format: int64
+            default: 0
+          description: El desplazamiento para la paginación.
+      responses:
+        "200":
+          description: Una lista de juegos.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Game"
+        "404":
+          description: No se encontraron juegos.
+components:
+  schemas:
+    Game:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: El ID del juego.
+        AppID:
+          type: integer
+          description: El ID de la aplicación del juego.
+        Name:
+          type: string
+          description: El nombre del juego.
+        "Release date":
+          type: string
+          description: La fecha de lanzamiento del juego.
+        "Estimated owners":
+          type: string
+          description: El número estimado de propietarios del juego.
+        "Peak CCU":
+          type: integer
+          description: El pico de usuarios concurrentes del juego.
+        "Required age":
+          type: integer
+          description: La edad requerida para jugar al juego.
+        Price:
+          type: number
+          description: El precio del juego.
+        "DLC count":
+          type: integer
+          description: El número de DLCs del juego.
+        "About the game":
+          type: string
+          description: Información sobre el juego.
+        "Supported languages":
+          type: array
+          items:
+            type: string
+          description: Los idiomas soportados por el juego.
+        "Full audio languages":
+          type: array
+          items:
+            type: string
+          description: Los idiomas con audio completo en el juego.
+        "Header image":
+          type: string
+          description: La imagen de cabecera del juego.
+        Website:
+          type: string
+          description: El sitio web del juego.
+        Windows:
+          type: boolean
+          description: Si el juego es compatible con Windows.
+        Mac:
+          type: boolean
+          description: Si el juego es compatible con Mac.
+        Linux:
+          type: boolean
+          description: Si el juego es compatible con Linux.
+        "Metacritic score":
+          type: integer
+          description: La puntuación de Metacritic del juego.
+        "User score":
+          type: integer
+          description: La puntuación de los usuarios del juego.
+        Positive:
+          type: integer
+          description: El número de críticas positivas del juego.
+        Negative:
+          type: integer
+          description: El número de críticas negativas del juego.
+        Achievements:
+          type: integer
+          description: El número de logros en el juego.
+        Recommendations:
+          type: integer
+          description: El número de recomendaciones del juego.
+        "Average playtime forever":
+          type: integer
+          description: El tiempo medio de juego total.
+        "Average playtime two weeks":
+          type: integer
+          description: El tiempo medio de juego en las últimas dos semanas.
+        "Median playtime forever":
+          type: integer
+          description: El tiempo mediano de juego total.
+        "Median playtime two weeks":
+          type: integer
+          description: El tiempo mediano de juego en las últimas dos semanas.
+        Developers:
+          type: string
+          description: Los desarrolladores del juego.
+        Publishers:
+          type: string
+          description: Los editores del juego.
+        Categories:
+          type: string
+          description: Las categorías del juego.
+        Genres:
+          type: string
+          description: Los géneros del juego.
+        Tags:
+          type: string
+          description: Las etiquetas del juego.
+        Screenshots:
+          type: string
+          description: Las capturas de pantalla del juego.
+        Movies:
+          type: string
+          description: Los trailers del juego.

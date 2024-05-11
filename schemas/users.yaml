@@ -1,0 +1,112 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Mi API de usuarios
+paths:
+  /users/{id}.json:
+    get:
+      summary: Detecta si el usuario ya tiene el juego
+      description: Verifica si un juego específico está en la biblioteca del usuario.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: El ID del juego.
+      responses:
+        "200":
+          description: El juego está en la biblioteca del usuario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  game:
+                    type: object
+                    description: La información del juego.
+        "401":
+          description: No autorizado.
+        "404":
+          description: El juego no está en la biblioteca del usuario.
+    delete:
+      summary: Elimina un juego de la biblioteca del usuario
+      description: Elimina un juego específico de la biblioteca del usuario.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: El ID del juego.
+      responses:
+        "200":
+          description: El juego se eliminó correctamente de la biblioteca del usuario.
+        "401":
+          description: No autorizado.
+        "404":
+          description: El juego no se encontró en la biblioteca del usuario.
+  /users/userGames.json:
+    get:
+      summary: Obtiene todos los juegos de un usuario
+      description: Obtiene todos los juegos en la biblioteca de un usuario.
+      responses:
+        "200":
+          description: Una lista de todos los juegos en la biblioteca del usuario.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    game:
+                      type: object
+                      description: La información del juego.
+        "401":
+          description: No autorizado.
+        "404":
+          description: El usuario no tiene juegos en su biblioteca.
+  /users/{id}:
+    get:
+      summary: Detecta si el usuario ya tiene el juego
+      description: Verifica si un juego específico está en la biblioteca del usuario.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: El ID del juego.
+      responses:
+        "200":
+          description: El juego está en la biblioteca del usuario.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  game:
+                    type: object
+                    description: La información del juego.
+        "401":
+          description: No autorizado.
+        "404":
+          description: El juego no está en la biblioteca del usuario.
+    delete:
+      summary: Elimina un juego de la biblioteca del usuario
+      description: Elimina un juego específico de la biblioteca del usuario.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: El ID del juego.
+      responses:
+        "200":
+          description: El juego se eliminó correctamente de la biblioteca del usuario.
+        "401":
+          description: No autorizado.
+        "404":
+          description: El juego no se encontró en la biblioteca del usuario.

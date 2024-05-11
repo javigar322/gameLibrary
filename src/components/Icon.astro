@@ -5,13 +5,13 @@ interface Props {
 }
 
 const { href, nameI } = Astro.props
-import { Github, Twitter } from "lucide-react"
+import { Github, Twitter, FileText } from "lucide-react"
 ---
 
 <a
 	href={href}
 	title={`icono de ${nameI}`}
-	class="cursor-pointer transition hover:scale-125 hover:opacity-70"
+	class="cursor-pointer text-primary transition hover:scale-125 hover:opacity-70"
 	target="_blank"
 	rel="noopener"
 >
@@ -19,6 +19,7 @@ import { Github, Twitter } from "lucide-react"
 		{
 			SiGithub: <Github />,
 			SiTwitter: <Twitter />,
+			SiFileText: <FileText />,
 			// Agrega más iconos según sea necesario
 		}[nameI]
 	}

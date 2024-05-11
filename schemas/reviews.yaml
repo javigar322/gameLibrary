@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Mi API de reseñas
+paths:
+  /reviews/{id}:
+    get:
+      summary: Obtiene todas las reseñas de un videojuego
+      description: Devuelve todas las reseñas de un videojuego específico.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: El ID del videojuego.
+      responses:
+        "200":
+          description: Una lista de reseñas del videojuego.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Review"
+        "400":
+          description: Error al obtener las reseñas.
+    post:
+      summary: Crea una nueva reseña para un videojuego
+      description: Crea una nueva reseña para un videojuego específico.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: El ID del videojuego.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                review:
+                  type: string
+                  description: El contenido de la reseña.
+      responses:
+        "200":
+          description: Reseña agregada correctamente.
+        "400":
+          description: Error al crear la reseña o el usuario ya ha reseñado este juego.
+components:
+  schemas:
+    Review:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: El ID del juego.
+        review:
+          type: string
+          description: El contenido de la reseña.
+        game_id:
+          type: string
+          description: El ID del videojuego.
+        username:
+          type: string
+          description: El nombre de usuario del autor de la reseña.
+        user_image:
+          type: string
+          description: La imagen de perfil del autor de la reseña.
