@@ -18,37 +18,31 @@ export default defineConfig({
 		auth(),
 		starlight({
 			defaultLocale: "es",
-			locales: {
-				es: {
-					label: "Español",
-					lang: "es",
-				},
-				en: {
-					label: "English",
-					lang: "en",
-				},
-			},
 			plugins: [
 				// Generate the OpenAPI documentation pages.
 				starlightOpenAPI([
 					{
 						base: "api/games",
 						label: "Games",
-						schema: "../gamelibrary/schemas/games.yaml",
+						schema: "../gamelibrary/schemas/es/games.yaml",
 					},
 					{
 						base: "api/reviews",
 						label: "Reviews",
-						schema: "../gamelibrary/schemas/reviews.yaml",
+						schema: "../gamelibrary/schemas/es/reviews.yaml",
 					},
 					{
 						base: "api/users",
 						label: "Users",
-						schema: "../gamelibrary/schemas/users.yaml",
+						schema: "../gamelibrary/schemas/es/users.yaml",
 					},
 				]),
 			],
 			sidebar: [
+				{
+					label: "Documentacion",
+					autogenerate: { directory: "documentacion" },
+				},
 				{
 					label: "EndPoints",
 					items: [...openAPISidebarGroups],

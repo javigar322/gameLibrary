@@ -4,11 +4,12 @@ import Layout from "../layouts/Layout.astro"
 import { Card } from "@/components/ui/card"
 
 import { SearchResult } from "@/components/SearchResult"
+import { SearchGames } from "@/components/SearchGames"
 ---
 
 <Layout title="Busqueda">
 	<Card className="grid h-full w-full flex-1 ">
-		<SearchResult client:load />
+		<SearchGames client:load />
 	</Card>
 </Layout>
 

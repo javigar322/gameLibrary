@@ -24,7 +24,7 @@ ser twitch, cuando ocurre esto se crea un usuario en la base
 de datos que guarda los juegos que ha añadido o las reseñas
 que ha hecho.
 
-![tabla de usuarios](../../../../public/assets/users.png)
+![tabla de usuarios](/public/assets/users.png)
 
 ## Juegos
 
@@ -34,7 +34,7 @@ y proporciona alrededor de 85.000 juegos para hacer
 uso de ellos sin problemas y trae el nombre, id ,
 géneros entre otros.
 
-![tabla de juegos](../../../../public/assets/games.png)
+![tabla de juegos](/public/assets/games.png)
 
 ## Reseñas
 
@@ -44,11 +44,11 @@ en la base de datos se guarda el juego de la reseña y su
 usuario , ademas en la tabla de usuarios se guarda también
 el juego para saber si lo ha reseñado ya o no.
 
-![tabla de reseñas](../../../../public/assets/reviews.png)
+![tabla de reseñas](/public/assets/reviews.png)
 
 ## Esquema
 
 El esquema se vería así , no tienes relaciones
 al ser una base de datos no relacional.
 
-![esquema de la base de datos](../../../../docs/bbdd.PNG)
+![esquema de la base de datos](/public/assets/bbdd.PNG)
