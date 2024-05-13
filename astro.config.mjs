@@ -24,17 +24,17 @@ export default defineConfig({
 					{
 						base: "api/games",
 						label: "Games",
-						schema: "../gamelibrary/schemas/es/games.yaml",
+						schema: "../gamelibrary/schemas/games.yaml",
 					},
 					{
 						base: "api/reviews",
 						label: "Reviews",
-						schema: "../gamelibrary/schemas/es/reviews.yaml",
+						schema: "../gamelibrary/schemas/reviews.yaml",
 					},
 					{
 						base: "api/users",
 						label: "Users",
-						schema: "../gamelibrary/schemas/es/users.yaml",
+						schema: "../gamelibrary/schemas/users.yaml",
 					},
 				]),
 			],

@@ -54,6 +54,10 @@ de los endpoints de la restFul api, se puede iniciar el proyecto con
 pnpm astro dev
 ```
 
+Para ver los esquemas de la documentación de la api , se
+puede encontrar en schemas y está en formato yaml para que
+lo detecte openapi.
+
 Se puede ver una imagen del resultado de la documentación en
 la carpeta docs con otro tipo de información relevante, además
 toda la documentación del proyecto se podrá encontrar en formato
