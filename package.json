@@ -36,6 +36,7 @@
     "algoliasearch": "^4.23.3",
     "astro": "^4.8.2",
     "auth-astro": "^4.1.1",
+    "bad-words-es": "^1.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^0.2.1",

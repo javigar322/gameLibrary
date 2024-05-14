@@ -16,8 +16,6 @@ export function Carrusel(props) {
 					</CarouselItem>
 				))}
 			</CarouselContent>
-			<CarouselPrevious />
-			<CarouselNext />
 		</Carousel>
 	)
 }
