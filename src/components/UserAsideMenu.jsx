@@ -5,6 +5,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuLabel,
 	DropdownMenuTrigger,
+	DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu"
 const { signIn, signOut } = await import("auth-astro/client")
 
@@ -32,6 +33,7 @@ export function UserMenu(props) {
 			<DropdownMenuTrigger>{props.trigger}</DropdownMenuTrigger>
 			<DropdownMenuContent className="w-56">
 				<DropdownMenuLabel>My Account</DropdownMenuLabel>
+				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuItem onClick={handleClickLogout}>{props.logout}</DropdownMenuItem>
 					<DropdownMenuItem>

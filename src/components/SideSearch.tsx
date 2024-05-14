@@ -16,17 +16,18 @@ import type { Game } from "@/types/game"
 import { useStore } from "@nanostores/react"
 import { reload } from "@/store"
 import { newGame } from "@/store"
+import { userGames } from "@/store"
 
 export function SideSearch() {
-	const [games, setGames] = useState<Game[]>([])
 	const $reload = useStore(reload)
 	const $newGame = useStore(newGame)
+	const $userGames = useStore(userGames)
 
 	useEffect(() => {
 		const fetchGames = async () => {
 			const res = await fetch(`/api/users/userGames.json`)
 			const initialGames: Game[] = await res.json()
-			setGames(initialGames)
+			userGames.set(initialGames)
 		}
 		fetchGames()
 	}, [$reload])
@@ -36,10 +37,10 @@ export function SideSearch() {
 			<CommandInput placeholder="Type a command or search..." />
 			<CommandList style={{ flex: "1", maxHeight: "650px", overflowY: "auto" }}>
 				<CommandEmpty>No results found.</CommandEmpty>
-				{games.map((game) => (
+				{$userGames.map((game) => (
 					<CommandItem
 						key={game.AppID}
-						className={game.AppID === $newGame ? "animate-bouncing" : ""}
+						className={game.AppID === $newGame ? "animate-bouncing " : ""}
 					>
 						<a href={`/store/${game.AppID}`} className="flex w-full items-center gap-2 ">
 							<picture className="h-8 w-8 flex-none">

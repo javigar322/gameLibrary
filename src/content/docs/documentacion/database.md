@@ -1,6 +1,6 @@
 ---
 title: Esquema de la BD
-description: Esquema de la base de datos utilizada en el proyecto
+description: Imagen del esquema entidad relación y descripción de las entidades y campos que conforman el modelo de datos.
 ---
 
 :::note

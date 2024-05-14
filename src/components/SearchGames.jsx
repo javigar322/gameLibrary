@@ -19,19 +19,17 @@ export function SearchGames() {
 				title={"ir a la pagina de la tienda de " + hit.Name}
 				key={hit.AppID}
 			>
-				<Card className="">
-					<img
-						src={hit["Header image"]}
-						alt={`Imagen del juego ${hit.Name}`}
-						className="h-full w-full rounded-t-md object-cover"
-						width="889"
-						height="500"
-						loading="eager"
-					/>
-					<div className="mt-2 flex justify-between px-2">
-						<h4 className="truncate">{hit.Name}</h4>
-					</div>
-				</Card>
+				<img
+					src={hit["Header image"]}
+					alt={`Imagen del juego ${hit.Name}`}
+					className="h-full w-full rounded-t-md object-cover"
+					width="889"
+					height="500"
+					loading="eager"
+				/>
+				<div className="mt-2 flex justify-between px-2">
+					<h4 className="truncate">{hit.Name}</h4>
+				</div>
 			</a>
 		</div>
 	)

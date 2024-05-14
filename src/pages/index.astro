@@ -2,7 +2,7 @@
 import "@/styles/globals.css"
 import Layout from "../layouts/Layout.astro"
 import { Card } from "@/components/ui/card"
-import { SearchGames } from "@/components/SearchGames"
+import { UserGames } from "@/components/userGames"
 ---
 
 <Layout title="Inicio">
@@ -12,6 +12,7 @@ import { SearchGames } from "@/components/SearchGames"
 			<h1 class="absolute bottom-2 ml-2">Videojuegos</h1>
 		</Card>
 		<h1>Mis juegos</h1>
+		<UserGames client:load />
 	</Card>
 
 	<style></style>
