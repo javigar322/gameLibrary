@@ -12,12 +12,13 @@ import { UserReviews } from "@/components/reviews"
 const { id } = Astro.params
 const response = await fetch(`http://localhost:4321/api/games/gameId.json?id=${id}`)
 const data: Game = await response.json()
+
 const urlsArray = data.Screenshots.split(",")
 ---
 
 <Layout title="Tienda">
 	<Card className="h-full flex-1 overflow-y-auto p-3">
-		<div class="flex justify-around pt-5">
+		<div class="flex justify-around gap-2 pt-5">
 			<div class="flex h-[450] w-[800px] flex-col space-y-5">
 				<Carrusel client:load urls={urlsArray} />
 				<div class="w-full flex-row">

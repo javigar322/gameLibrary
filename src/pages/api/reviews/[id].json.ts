@@ -1,6 +1,7 @@
 import { createReview, getReviews, userReviewed } from "@/db/reviews"
 import type { APIRoute } from "astro"
 import { getSession } from "auth-astro/server"
+import isProfane from "bad-words-es"
 
 // obtener todas las reseñas de un videojuego
 export const GET: APIRoute = async ({ params }) => {
@@ -35,6 +36,18 @@ export const POST: APIRoute = async ({ params, request }) => {
 			{ status: 400 }
 		)
 	}
+	const is_profane = new isProfane()
+	const bad_review = is_profane.isProfane(review?.toString() || "")
+	if (bad_review) {
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Reseña no permitida",
+				message: "No puedes enviar reseñas con contenido inapropiado",
+			}),
+			{ status: 400 }
+		)
+	}
 	const created_review = await createReview(review, game_id, user?.user)
 	if (!created_review) {
 		return new Response(
@@ -46,6 +59,7 @@ export const POST: APIRoute = async ({ params, request }) => {
 			{ status: 400 }
 		)
 	}
+
 	return new Response(
 		JSON.stringify({
 			variant: "default",

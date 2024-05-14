@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from "react"
+import { type FormEvent, useState, useEffect } from "react"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { ToastAction } from "@/components/ui/toast"
@@ -7,6 +7,10 @@ import { useToast } from "@/components/ui/use-toast"
 export function ReviewForm(props: any) {
 	const { toast } = useToast()
 	const [responseMessage, setResponseMessage] = useState("")
+	if (!props || !props.id) {
+		// Manejar el caso en que props o props.id no existen
+		return null
+	}
 
 	async function submit(e: FormEvent<HTMLFormElement>) {
 		e.preventDefault()
