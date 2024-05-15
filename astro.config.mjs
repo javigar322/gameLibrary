@@ -2,11 +2,14 @@ import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
 import react from "@astrojs/react"
 import auth from "auth-astro"
-import node from "@astrojs/node"
+import vercel from "@astrojs/vercel/serverless"
 import starlight from "@astrojs/starlight"
 import starlightOpenAPI, { openAPISidebarGroups } from "starlight-openapi"
-
+import { VitePWA } from "vite-plugin-pwa"
 import sitemap from "@astrojs/sitemap"
+
+// Helper imports
+import { manifest, seoConfig } from "./src/utils/seoConfig"
 
 // https://astro.build/config
 export default defineConfig({
@@ -53,15 +56,32 @@ export default defineConfig({
 		sitemap(),
 	],
 	output: "server",
-	image: {
-		domains: ["astro.build"],
-		remotePatterns: [
-			{
-				protocol: "https",
-			},
+	adapter: vercel({
+		webAnalytics: {
+			enabled: true,
+		},
+	}),
+	build: {
+		inlineStylesheets: "always",
+	},
+	compressHTML: true,
+	prefetch: true,
+	devToolbar: {
+		enabled: false,
+	},
+	site: seoConfig.baseURL,
+	vite: {
+		build: {
+			cssMinify: false,
+		},
+		ssr: {
+			noExternal: ["path-to-regexp"],
+		},
+		plugins: [
+			VitePWA({
+				registerType: "autoUpdate",
+				manifest,
+			}),
 		],
 	},
-	adapter: node({
-		mode: "middleware",
-	}),
 })

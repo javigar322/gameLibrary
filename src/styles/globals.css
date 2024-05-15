@@ -57,8 +57,3 @@
 		@apply bg-background text-foreground;
 	}
 }
-
-.custom-scroll {
-	scrollbar-width: thin;
-	scrollbar-color: var(--border) var(--background);
-}

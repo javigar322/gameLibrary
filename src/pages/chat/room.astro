@@ -1,0 +1,33 @@
+---
+import { Card } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import Layout from "@/layouts/Layout.astro"
+---
+
+<Layout title="room">
+	<Card client:load className="relative h-full w-full flex-1">
+		<ul
+			class="m-0 h-full list-none overflow-hidden overflow-y-scroll scroll-smooth p-[48px] text-foreground"
+			id="message"
+		>
+		</ul>
+		<form id="form" class="absolute bottom-0 left-0 right-0 flex h-[48px]">
+			<Input
+				client:load
+				type="text"
+				name="message"
+				id="input"
+				placeholder="Type a message"
+				className="m-1 flex-1 focus:outline-none"
+			/>
+			<Button client:load type="submit">Enviar</Button>
+		</form>
+	</Card>
+</Layout>
+
+<style>
+	#message > li {
+		padding: 0.5rem 1rem;
+	}
+</style>
