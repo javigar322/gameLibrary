@@ -2,7 +2,7 @@ import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
 import react from "@astrojs/react"
 import auth from "auth-astro"
-import vercel from "@astrojs/vercel/serverless"
+import node from "@astrojs/node"
 import starlight from "@astrojs/starlight"
 import starlightOpenAPI, { openAPISidebarGroups } from "starlight-openapi"
 import { VitePWA } from "vite-plugin-pwa"
@@ -56,10 +56,8 @@ export default defineConfig({
 		sitemap(),
 	],
 	output: "server",
-	adapter: vercel({
-		webAnalytics: {
-			enabled: true,
-		},
+	adapter: node({
+		mode: "standalone",
 	}),
 	build: {
 		inlineStylesheets: "always",
