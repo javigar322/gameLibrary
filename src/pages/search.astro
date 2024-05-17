@@ -9,6 +9,6 @@ import { SearchGames } from "@/components/SearchGames"
 
 <Layout title="Busqueda">
 	<Card className="grid h-full w-full flex-1 ">
-		<SearchResult client:load />
+		<SearchResult transition:persist-props client:load />
 	</Card>
 </Layout>

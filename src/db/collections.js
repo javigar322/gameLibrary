@@ -1,8 +1,13 @@
 import { Users } from "./mongodb"
+import { getGamesInfo } from "./games"
 
 export const getCollectionByName = async (user, collectionName) => {
 	const user_found = await (await Users()).findOne({ uid: user.id })
-	return user_found.collections.find((collection) => collection.collectionName === collectionName)
+	const collection = user_found.collections.find(
+		(collection) => collection.collectionName === collectionName
+	)
+	const games_id = collection ? collection.games : []
+	return getGamesInfo(games_id)
 }
 
 export const getAllCollection = async (user) => {
@@ -13,7 +18,7 @@ export const getAllCollection = async (user) => {
 export const createCollection = async (user, collectionName) => {
 	const collection = await (
 		await Users()
-	).UpdateOne(
+	).updateOne(
 		{ uid: user.id },
 		{ $addToSet: { collections: { collectionName: collectionName, games: [] } } }
 	)
@@ -23,9 +28,10 @@ export const createCollection = async (user, collectionName) => {
 export const addGameToCollection = async (user, collectionName, game_id) => {
 	const collection = await (
 		await Users()
-	).UpdateOne(
+	).updateOne(
 		{ "uid": user.id, "collections.collectionName": collectionName },
-		{ $push: { "collectionName.$.games": game_id } }
+		{ $addToSet: { ["collections.$[elem].games"]: game_id } },
+		{ arrayFilters: [{ "elem.collectionName": collectionName }] }
 	)
 	return collection
 }
@@ -33,9 +39,10 @@ export const addGameToCollection = async (user, collectionName, game_id) => {
 export const removeGameFromCollection = async (user, collectionName, game_id) => {
 	const collection = await (
 		await Users()
-	).UpdateOne(
+	).updateOne(
 		{ "uid": user.id, "collections.collectionName": collectionName },
-		{ $pull: { "collectionName.$.games": game_id } }
+		{ $pull: { ["collections.$[elem].games"]: game_id } },
+		{ arrayFilters: [{ "elem.collectionName": collectionName }] }
 	)
 	return collection
 }
@@ -43,6 +50,6 @@ export const removeGameFromCollection = async (user, collectionName, game_id) =>
 export const removeCollection = async (user, collectionName) => {
 	const collection = await (
 		await Users()
-	).UpdateOne({ uid: user.id }, { $pull: { collections: { collectionName: collectionName } } })
+	).updateOne({ uid: user.id }, { $pull: { collections: { collectionName: collectionName } } })
 	return collection
 }

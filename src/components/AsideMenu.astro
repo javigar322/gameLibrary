@@ -25,7 +25,7 @@ const iniciado = session ? true : false
 		</AsideMenuItem>
 
 		<!-- Menu del usuario -->
-		<UserMenu client:load data={iniciado}>
+		<UserMenu transition:persist-props client:load data={iniciado}>
 			{
 				session ? (
 					<p> {session.user?.name}</p>
@@ -58,13 +58,13 @@ const iniciado = session ? true : false
 		<!-- Menu del usuario -->
 	</Card>
 	<!-- carta de abajo -->
-	<Card className="flex-1 ">
+	<Card client:load className="flex-1 ">
 		<AsideMenuItem href="/">
 			<Library />
 			Mi biblioteca
 		</AsideMenuItem>
 
-		<SideSearch client:load />
+		<SideSearch transition:persist client:idle />
 	</Card>
 </nav>
 

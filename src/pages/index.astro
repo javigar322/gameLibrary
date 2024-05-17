@@ -2,17 +2,15 @@
 import "@/styles/globals.css"
 import Layout from "../layouts/Layout.astro"
 import { Card } from "@/components/ui/card"
-import { UserGames } from "@/components/userGames"
+import UserGames from "@/components/UserGames.astro"
+import UserCollections from "@/components/UserCollections.astro"
 ---
 
 <Layout title="Inicio">
 	<Card className="h-full flex-1 p-3">
-		<h1>Colecciones</h1>
-		<Card className="relative aspect-square h-32 w-32 p-3 ">
-			<h1 class="absolute bottom-2 ml-2">Videojuegos</h1>
-		</Card>
+		<UserCollections />
 		<h1>Mis juegos</h1>
-		<UserGames client:load />
+		<UserGames />
 	</Card>
 
 	<style></style>

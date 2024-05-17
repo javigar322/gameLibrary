@@ -32,9 +32,15 @@ const urlsArray = data.Screenshots.split(",")
 			</div>
 
 			<div class="w-[450px] flex-col">
-				<Image src={data["Header image"]} alt="videojuego" width="450" height="400" />
+				<img
+					transition:name=`imagen-juego ${data.AppID}`
+					src={data["Header image"]}
+					alt="videojuego"
+					width="450"
+					height="400"
+				/>
 				<div class="flex flex-row justify-between">
-					<h1 class="pt-4">{data.Name}</h1>
+					<h1 transition:name=`nombre-juego ${data.AppID}` class="pt-4">{data.Name}</h1>
 					<p class="pt-4">
 						{data["User score"]}
 					</p>

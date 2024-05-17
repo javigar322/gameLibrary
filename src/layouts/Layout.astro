@@ -1,4 +1,5 @@
 ---
+import { ViewTransitions } from "astro:transitions"
 const { title } = Astro.props
 import Footer from "@/components/Footer.astro"
 import AsideMenu from "@/components/AsideMenu.astro"
@@ -15,8 +16,9 @@ import { Toaster } from "@/components/ui/toaster"
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" /><meta
 			name="generator"
 			content={Astro.generator}
-		/></head
-	>
+		/>
+		<ViewTransitions fallback="none" />
+	</head>
 
 	<body>
 		<div id="app" class="relative h-screen gap-2 p-2">
@@ -25,7 +27,7 @@ import { Toaster } from "@/components/ui/toaster"
 			</aside>
 
 			<main class="w-full overflow-y-hidden [grid-area:main]">
-				<slot />
+				<slot transition:persist />
 				<Toaster client:load />
 			</main>
 
@@ -33,17 +35,28 @@ import { Toaster } from "@/components/ui/toaster"
 				<Footer />
 			</footer>
 		</div>
-	</body>
+		<style>
+			#app {
+				display: grid;
+				grid-template-areas:
+					"aside main main"
+					"footer footer footer ";
+				grid-template-columns: 350px 1fr;
+				grid-template-rows: 1fr auto;
+			}
+		</style>
+		<style is:global></style>
+		<script>
+			let previousTitle = document.title
 
-	<style>
-		#app {
-			display: grid;
-			grid-template-areas:
-				"aside main main"
-				"footer footer footer ";
-			grid-template-columns: 350px 1fr;
-			grid-template-rows: 1fr auto;
-		}
-	</style>
-	<style is:global></style>
+			window.addEventListener("blur", () => {
+				previousTitle = document.title
+				document.title = "¡No te vayas! 😢"
+			})
+
+			window.addEventListener("focus", () => {
+				document.title = previousTitle
+			})
+		</script>
+	</body>
 </html>

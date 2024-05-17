@@ -17,9 +17,15 @@ export const POST: APIRoute = async ({ params, request }) => {
 	const { url } = request
 	const searchParams = new URL(url).searchParams
 	const collectionName = searchParams.get("collection") ?? null
-	const game_id = params.id
+	const game_id = Number(params.id)
+	console.log(collectionName, game_id)
 	if (!collectionName || !game_id) {
-		return new Response(null, { status: 400 })
+		return new Response(
+			JSON.stringify({
+				message: "algun error",
+			}),
+			{ status: 400 }
+		)
 	}
 	const newGame = await addGameToCollection(user, collectionName, game_id)
 	if (!newGame) {
@@ -43,7 +49,7 @@ export const DELETE: APIRoute = async ({ params, request }) => {
 	const { url } = request
 	const searchParams = new URL(url).searchParams
 	const collectionName = searchParams.get("collection") ?? null
-	const game_id = params.id
+	const game_id = Number(params.id)
 	if (!collectionName || !game_id) {
 		return new Response(null, { status: 400 })
 	}

@@ -77,10 +77,14 @@ export function UserMenu(props) {
 				<DropdownMenuGroup>
 					<DropdownMenuItem onClick={handleClickLogout}>{props.logout}</DropdownMenuItem>
 					<DropdownMenuItem>
-						<a href="/chat/welcome">mis chats</a>
+						<a className="w-full" href="/chat/welcome">
+							mis chats
+						</a>
 					</DropdownMenuItem>
 					<DropdownMenuItem>
-						<a href="/admin/dashboard">admin</a>
+						<a className="w-full" href="/admin/dashboard">
+							admin
+						</a>
 					</DropdownMenuItem>
 				</DropdownMenuGroup>
 			</DropdownMenuContent>

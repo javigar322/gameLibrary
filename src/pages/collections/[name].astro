@@ -1,0 +1,51 @@
+---
+const { name } = Astro.params
+import Layout from "@/layouts/Layout.astro"
+import { Card } from "@/components/ui/card"
+import type { Game } from "@/types/game"
+import { Trash2 } from "lucide-react"
+
+const cookie = Astro.request.headers.get("cookie") || ""
+const resCollectionGames = await fetch(
+	`${import.meta.env.PUBLIC_BASE_URL}/api/collections/collection.json?collection=${name}`,
+	{
+		headers: {
+			cookie: cookie,
+		},
+	}
+)
+let collectionsGames
+if (resCollectionGames.ok) {
+	collectionsGames = await resCollectionGames.json()
+} else {
+	console.error("Error fetching games:", resCollectionGames.status, resCollectionGames.statusText)
+}
+---
+
+<Layout title={name}>
+	<Card client:load className="h-full flex-1 p-3 transition-all">
+		<h1>{name}</h1>
+		<section class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6" id="juegos">
+			{
+				collectionsGames.collections.map((game: Game) => (
+					<div class="w-full">
+						<a href={`/store/${game.AppID}`}>
+							<img
+								transition:name={`imagen-juego ${game.AppID}`}
+								src={game["Header image"]}
+								alt="videojuego de prueba"
+								class=" w-full rounded-lg object-cover shadow-md"
+							/>
+						</a>
+						<div class="flex flex-row items-center justify-between">
+							<p transition:name={`nombre-juego ${game.AppID}`}>{game.Name}</p>
+							<Trash2 className="  hover:text-primary" />
+						</div>
+					</div>
+				))
+			}
+		</section>
+	</Card>
+</Layout>
+
+<script></script>

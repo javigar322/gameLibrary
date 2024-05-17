@@ -17,6 +17,8 @@ import { useStore } from "@nanostores/react"
 import { reload } from "@/store"
 import { newGame } from "@/store"
 import { userGames } from "@/store"
+import type { Collection } from "@/types/collection"
+import { userCollections } from "@/store"
 
 export function SideSearch() {
 	const $reload = useStore(reload)
@@ -28,6 +30,10 @@ export function SideSearch() {
 			const res = await fetch(`/api/users/userGames.json`)
 			const initialGames: Game[] = await res.json()
 			userGames.set(initialGames)
+
+			const resCollection = await fetch(`/api/collections/collection.json`)
+			const collections: Collection[] = await resCollection.json()
+			userCollections.set(collections)
 		}
 		fetchGames()
 	}, [$reload])

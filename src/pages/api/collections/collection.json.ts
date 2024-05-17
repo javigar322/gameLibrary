@@ -7,6 +7,7 @@ import {
 	getCollectionByName,
 	removeCollection,
 } from "@/db/collections"
+import { collection } from "dist/server/chunks/analysis_D4qTqrZP.mjs"
 
 // devolver las colecciones del usuario
 export const GET: APIRoute = async ({ request }) => {
@@ -44,7 +45,9 @@ export const POST: APIRoute = async ({ request }) => {
 	if (!user) {
 		return new Response(
 			JSON.stringify({
-				message: "Unauthorized",
+				variant: "destructive",
+				title: "Error al crear la colección",
+				message: "¡Error al crear la colección, inténtalo de nuevo!",
 			}),
 			{ status: 401 }
 		)
@@ -53,13 +56,35 @@ export const POST: APIRoute = async ({ request }) => {
 	const searchParams = new URL(url).searchParams
 	const collectionName = searchParams.get("collection") ?? null
 	if (!collectionName) {
-		return new Response(null, { status: 400 })
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Error al crear la colección",
+				message: "¡Error al crear la colección, inténtalo de nuevo!",
+			}),
+			{ status: 400 }
+		)
 	}
 	const newCollection = await createCollection(user, collectionName)
 	if (!newCollection) {
-		return new Response(null, { status: 400 })
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Error al crear la colección",
+				message: " ¡Error al crear la colección, inténtalo de nuevo!",
+			}),
+			{ status: 400 }
+		)
 	}
-	return new Response(JSON.stringify(newCollection), { status: 201 })
+	return new Response(
+		JSON.stringify({
+			variant: "default",
+			title: "Colección creada correctamente",
+			message: "¡Colección creada correctamente!",
+			collection: newCollection,
+		}),
+		{ status: 201 }
+	)
 }
 
 // borrar colección
@@ -69,7 +94,9 @@ export const DELETE: APIRoute = async ({ request }) => {
 	if (!user) {
 		return new Response(
 			JSON.stringify({
-				message: "Unauthorized",
+				variant: "destructive",
+				title: "Error al borrar la colección",
+				message: " ¡Error al borrar la colección, inténtalo de nuevo!",
 			}),
 			{ status: 401 }
 		)
@@ -78,11 +105,25 @@ export const DELETE: APIRoute = async ({ request }) => {
 	const searchParams = new URL(url).searchParams
 	const collectionName = searchParams.get("collection") ?? null
 	if (!collectionName) {
-		return new Response(null, { status: 400 })
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Error al borrar la colección",
+				message: "¡Error al borrar la colección, inténtalo de nuevo",
+			}),
+			{ status: 400 }
+		)
 	}
 	const deletedCollection = await removeCollection(user, collectionName)
 	if (!deletedCollection) {
-		return new Response(null, { status: 400 })
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Error al borrar la colección",
+				message: "¡Error al borrar la colección, inténtalo de nuevo",
+			}),
+			{ status: 400 }
+		)
 	}
 	return new Response(JSON.stringify(deletedCollection), { status: 200 })
 }

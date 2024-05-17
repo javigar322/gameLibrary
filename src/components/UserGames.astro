@@ -1,0 +1,59 @@
+---
+import { userGames } from "@/store"
+import { MoreUserGames } from "@/components/moreUserGames"
+import type { Game } from "@/types/game"
+const cookie = Astro.request.headers.get("cookie") || ""
+const res = await fetch(`${import.meta.env.PUBLIC_BASE_URL}/api/users/userGames.json`, {
+	headers: {
+		cookie: cookie,
+	},
+})
+let initialGames: Game[] = []
+if (res.ok) {
+	initialGames = await res.json()
+} else {
+	console.error("Error fetching games:", res.status, res.statusText)
+}
+---
+
+<section class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6" id="juegos">
+	{
+		initialGames.map((game) => (
+			<div class="w-full">
+				<a href={`/store/${game.AppID}`}>
+					<img
+						transition:name={`imagen-juego ${game.AppID}`}
+						src={game["Header image"]}
+						alt="videojuego de prueba"
+						class=" w-full rounded-lg object-cover shadow-md"
+					/>
+				</a>
+				<div class="flex flex-row items-center justify-between">
+					<p transition:name={`nombre-juego ${game.AppID}`}>{game.Name}</p>
+					<MoreUserGames client:load />
+				</div>
+			</div>
+		))
+	}
+</section>
+
+<script>
+	import type { Game } from "@/types/game"
+	import { dragAndDrop } from "@formkit/drag-and-drop"
+	import { userGames, draggedGame } from "@/store"
+
+	let games = userGames.get()
+
+	dragAndDrop<Game>({
+		parent: document.getElementById("juegos")!,
+		getValues: () => games,
+		setValues: (newGames) => {
+			games = newGames
+		},
+		config: {
+			handleDragstart(data) {
+				draggedGame.set(data.targetData.node.data.value)
+			},
+		},
+	})
+</script>

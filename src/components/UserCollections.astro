@@ -1,0 +1,64 @@
+---
+import { Card } from "@/components/ui/card"
+import type { Collection } from "@/types/collection"
+
+const cookie = Astro.request.headers.get("cookie") || ""
+const resCollection = await fetch(
+	`${import.meta.env.PUBLIC_BASE_URL}/api/collections/collection.json`,
+	{
+		headers: {
+			cookie: cookie,
+		},
+	}
+)
+let collections: Collection[] = []
+if (resCollection.ok) {
+	collections = await resCollection.json()
+} else {
+	console.error("Error fetching games:", resCollection.status, resCollection.statusText)
+}
+---
+
+<div>
+	<h1>Colecciones {collections.length}</h1>
+	<section class="grid grid-cols-9 gap-4 p-2">
+		{
+			collections.map((collection, index) => (
+				<a href={`/collections/${collection.collectionName}`}>
+					<Card className=" carta relative h-32 w-full" data-collection={collection.collectionName}>
+						<div class="absolute bottom-3 w-full text-center">
+							<h1>{collection.collectionName}</h1>
+							<h4>({collection.games.length})</h4>
+						</div>
+					</Card>
+				</a>
+			))
+		}
+	</section>
+</div>
+
+<script>
+	import { draggedGame, reload } from "@/store"
+
+	document.addEventListener("astro:page-load", () => {
+		document.querySelectorAll(".carta").forEach((card) => {
+			card.addEventListener("drop", async (event: any) => {
+				event.preventDefault()
+				const collectionName = event.target.dataset.collection
+				const $draggedGame = draggedGame.get()
+				const response = await fetch(
+					`${import.meta.env.PUBLIC_BASE_URL}/api/collections/${$draggedGame?.AppID}.json?collection=${collectionName}`,
+					{
+						method: "POST",
+					}
+				)
+				const data = await response.json()
+				if (data) {
+					console.log(data)
+				}
+				window.location.reload()
+				draggedGame.set(null)
+			})
+		})
+	})
+</script>
