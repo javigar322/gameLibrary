@@ -41,8 +41,8 @@ const urlsArray = data.Screenshots.split(",")
 				/>
 				<div class="flex flex-row justify-between">
 					<h1 transition:name=`nombre-juego ${data.AppID}` class="pt-4">{data.Name}</h1>
-					<p class="pt-4">
-						{data["User score"]}
+					<p transition:name=`game-score ${data.AppID}` class="pt-4">
+						{data["Metacritic score"]}
 					</p>
 				</div>
 				<h2 class="pt-4">{data["About the game"]}</h2>

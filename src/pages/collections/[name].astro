@@ -3,7 +3,7 @@ const { name } = Astro.params
 import Layout from "@/layouts/Layout.astro"
 import { Card } from "@/components/ui/card"
 import type { Game } from "@/types/game"
-import { Trash2 } from "lucide-react"
+import { DeleteGameFromCollection } from "@/components/deleteGameFromCollection"
 
 const cookie = Astro.request.headers.get("cookie") || ""
 const resCollectionGames = await fetch(
@@ -39,7 +39,7 @@ if (resCollectionGames.ok) {
 						</a>
 						<div class="flex flex-row items-center justify-between">
 							<p transition:name={`nombre-juego ${game.AppID}`}>{game.Name}</p>
-							<Trash2 className="  hover:text-primary" />
+							<DeleteGameFromCollection client:load name={name} id={game.AppID} />
 						</div>
 					</div>
 				))

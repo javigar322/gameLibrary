@@ -1,6 +1,6 @@
 ---
 import "@/styles/globals.css"
-import Layout from "../layouts/Layout.astro"
+import Layout from "@/layouts/Layout.astro"
 import { Card } from "@/components/ui/card"
 import UserGames from "@/components/UserGames.astro"
 import UserCollections from "@/components/UserCollections.astro"
@@ -8,6 +8,10 @@ import UserCollections from "@/components/UserCollections.astro"
 
 <Layout title="Inicio">
 	<Card className="h-full flex-1 p-3">
-		<h1>Otros juegos</h1>
+		<UserCollections />
+		<h1>Mis juegos</h1>
+		<UserGames />
 	</Card>
+
+	<style></style>
 </Layout>

@@ -38,10 +38,20 @@ if (resCollection.ok) {
 </div>
 
 <script>
-	import { draggedGame, reload } from "@/store"
+	import { draggedGame } from "@/store"
 
 	document.addEventListener("astro:page-load", () => {
-		document.querySelectorAll(".carta").forEach((card) => {
+		const cards = document.querySelectorAll(".carta")
+		cards.forEach((card) => {
+			card.addEventListener("dragenter", (event: any) => {
+				event.preventDefault()
+				event.target.classList.add("border-primary")
+			})
+
+			card.addEventListener("dragleave", (event: any) => {
+				event.preventDefault()
+				event.target.classList.remove("border-primary")
+			})
 			card.addEventListener("drop", async (event: any) => {
 				event.preventDefault()
 				const collectionName = event.target.dataset.collection

@@ -1,0 +1,79 @@
+---
+import Layout from "@/layouts/Layout.astro"
+import { Card } from "@/components/ui/card"
+import type { Game } from "@/types/game"
+import { Button } from "@/components/ui/button"
+
+let { page } = Astro.params
+if (isNaN(page) || page < 1) {
+	return Astro.redirect("/games/1")
+}
+const pageSize = 8
+const offset = (page - 1) * pageSize
+
+const { url } = Astro.request
+const searchParams = new URL(url).searchParams
+const query = searchParams.get("query") || null
+const genre = searchParams.get("genre") || null
+const minMetacriticScore = searchParams.get("minMetacriticScore") || null
+const minUserScore = searchParams.get("minUserScore") || null
+
+const response = await fetch(
+	`${import.meta.env.PUBLIC_BASE_URL}/api/search/searchGames.json?offset=${offset}`
+)
+
+let data = []
+if (response.ok) {
+	data = await response.json()
+} else {
+	console.error(`Error: ${response.status}`)
+}
+---
+
+<Layout title="busqueda">
+	<Card className="grid h-full w-full flex-1 ">
+		<h1>Página {page}</h1>
+		<section class="mt-2 grid grid-cols-4 gap-4 px-4">
+			{
+				data.map((game: Game) => (
+					<a href={`/store/${game.AppID}`} title={"ir a la pagina de la tienda de " + game.Name}>
+						<Card className="">
+							<img
+								src={game["Header image"]}
+								alt={`Imagen del juego ${game.Name}`}
+								class=" aspect-video h-full w-full rounded-t-md"
+								width="889"
+								height="500"
+								loading="eager"
+								transition:name={`imagen-juego ${game.AppID}`}
+							/>
+							<div class="mt-2 flex justify-between px-2">
+								<h4 transition:name={`nombre-juego ${game.AppID}`} class="truncate">
+									{game.Name}
+								</h4>
+								<p transition:name={`game-score ${game.AppID}`}>{game["Metacritic score"]}</p>
+							</div>
+							<p class="mb-2 mt-2 line-clamp-3 px-2">{game["About the game"]}</p>
+						</Card>
+					</a>
+				))
+			}
+		</section>
+		<div class="flex h-full w-full flex-row items-center">
+			{
+				page > 1 ? (
+					<a class="ml-4 flex w-full justify-start" href={`/games/${page - 1}`}>
+						<Button>Anterior</Button>
+					</a>
+				) : null
+			}
+			{
+				data.length === pageSize ? (
+					<a class="mr-4 flex w-full justify-end" href={`/games/${Number(page) + 1}`}>
+						<Button>Siguiente</Button>
+					</a>
+				) : null
+			}
+		</div>
+	</Card>
+</Layout>
