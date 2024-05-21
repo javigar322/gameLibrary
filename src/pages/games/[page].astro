@@ -19,7 +19,7 @@ const minMetacriticScore = searchParams.get("minMetacriticScore") || null
 const minUserScore = searchParams.get("minUserScore") || null
 
 const response = await fetch(
-	`${import.meta.env.PUBLIC_BASE_URL}/api/search/searchGames.json?offset=${offset}`
+	`${import.meta.env.PUBLIC_BASE_URL}/api/search/searchGames.json?offset=${offset}?`
 )
 
 let data = []

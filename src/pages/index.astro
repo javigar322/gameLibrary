@@ -1,13 +1,183 @@
 ---
-import "@/styles/globals.css"
-import Layout from "../layouts/Layout.astro"
 import { Card } from "@/components/ui/card"
-import UserGames from "@/components/UserGames.astro"
-import UserCollections from "@/components/UserCollections.astro"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import Layout from "@/layouts/Layout.astro"
+import type { Game } from "@/types/game"
+
+// URL de tu API
+const API_URL = `${import.meta.env.PUBLIC_BASE_URL}/api/search/searchGames.json`
+
+// Función para hacer fetch de juegos con distintos criterios
+async function fetchGames(params: Record<string, any>) {
+	const url = new URL(API_URL)
+	const searchParams = new URLSearchParams(params)
+
+	url.search = searchParams.toString()
+
+	const response = await fetch(url.toString())
+	if (!response.ok) {
+		console.log(response)
+		throw new Error(`Error fetching games: ${response.statusText}`)
+	}
+
+	const data: Game[] = await response.json()
+	return data
+}
+
+// Función para comprobar si un juego es único
+function isUnique(game: Game, ...gameLists: any) {
+	for (let list of gameLists) {
+		if (list.some((g: Game) => g.AppID === game.AppID)) {
+			return false
+		}
+	}
+	return true
+}
+
+// Cargar juegos por géneros y puntajes
+let adventureGames = await fetchGames({
+	genre: "Adventure",
+	limit: 4,
+	sort: "Metacritic score",
+	order: "desc",
+})
+
+let indieGames = await fetchGames({
+	genre: "Indie",
+	limit: 4,
+	sort: "Metacritic score",
+	order: "desc",
+}).then((games: Game[]) => games.filter((game: Game) => isUnique(game, adventureGames)))
+
+let topRatedGames = (
+	await fetchGames({ limit: 4, sort: "Metacritic score", order: "desc" })
+).filter((game: any) => isUnique(game, adventureGames, indieGames))
+
+let communityFavorites = await fetchGames({ limit: 14, sort: "User score", order: "desc" }).then(
+	(games: Game[]) =>
+		games.filter((game: Game) => isUnique(game, adventureGames, indieGames, topRatedGames))
+)
 ---
 
-<Layout title="Inicio">
-	<Card className="h-full flex-1 p-3">
-		<h1>Otros juegos</h1>
+<style>
+	.h-full.overflow-y-scroll.scroll-smooth.p-\[24px\]::-webkit-scrollbar {
+		display: none;
+	}
+
+	.h-full.overflow-y-scroll.scroll-smooth.p-\[24px\] {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
+</style>
+
+<Layout title="home">
+	<Card className="h-full space-y-12 overflow-y-scroll  scroll-smooth p-[24px]">
+		<section>
+			<h2>Top Adventure Games</h2>
+			<div class="mt-2 grid grid-cols-4 gap-4 p-4">
+				{
+					adventureGames.map((game: Game) => (
+						<a href={`/store/${game.AppID}`} title={"ir a la pagina de la tienda de " + game.Name}>
+							<img
+								src={game["Header image"]}
+								alt={`Imagen del juego ${game.Name}`}
+								class=" aspect-video h-full w-full rounded-t-md"
+								width="889"
+								height="500"
+								loading="eager"
+								transition:name={`imagen-juego ${game.AppID}`}
+							/>
+							<div class="mt-2 flex justify-between px-2">
+								<h4 transition:name={`nombre-juego ${game.AppID}`} class="truncate">
+									{game.Name}
+								</h4>
+								<p transition:name={`game-score ${game.AppID}`}>{game["Metacritic score"]}</p>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
+
+		<section>
+			<h2>Top Indie Games</h2>
+			<div class="mt-2 grid grid-cols-4 gap-4 px-4">
+				{
+					indieGames.map((game: Game) => (
+						<a href={`/store/${game.AppID}`} title={"ir a la pagina de la tienda de " + game.Name}>
+							<img
+								src={game["Header image"]}
+								alt={`Imagen del juego ${game.Name}`}
+								class=" aspect-video h-full w-full rounded-t-md"
+								width="889"
+								height="500"
+								loading="eager"
+								transition:name={`imagen-juego ${game.AppID}`}
+							/>
+							<div class="mt-2 flex justify-between px-2">
+								<h4 transition:name={`nombre-juego ${game.AppID}`} class="truncate">
+									{game.Name}
+								</h4>
+								<p transition:name={`game-score ${game.AppID}`}>{game["Metacritic score"]}</p>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
+
+		<section>
+			<h2>Top Rated Games</h2>
+			<div class="mt-2 grid grid-cols-4 gap-4 px-4">
+				{
+					topRatedGames.map((game: Game) => (
+						<a href={`/store/${game.AppID}`} title={"ir a la pagina de la tienda de " + game.Name}>
+							<img
+								src={game["Header image"]}
+								alt={`Imagen del juego ${game.Name}`}
+								class=" aspect-video h-full w-full rounded-t-md"
+								width="889"
+								height="500"
+								loading="eager"
+								transition:name={`imagen-juego ${game.AppID}`}
+							/>
+							<div class="mt-2 flex justify-between px-2">
+								<h4 transition:name={`nombre-juego ${game.AppID}`} class="truncate">
+									{game.Name}
+								</h4>
+								<p transition:name={`game-score ${game.AppID}`}>{game["Metacritic score"]}</p>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
+
+		<section>
+			<h2>Community Favorites</h2>
+			<div class="mt-2 grid grid-cols-4 gap-4 space-y-6 px-4">
+				{
+					communityFavorites.map((game: Game) => (
+						<a href={`/store/${game.AppID}`} title={"ir a la pagina de la tienda de " + game.Name}>
+							<img
+								src={game["Header image"]}
+								alt={`Imagen del juego ${game.Name}`}
+								class=" aspect-video h-full w-full rounded-t-md"
+								width="889"
+								height="500"
+								loading="eager"
+								transition:name={`imagen-juego ${game.AppID}`}
+							/>
+							<div class="mt-2 flex justify-between px-2">
+								<h4 transition:name={`nombre-juego ${game.AppID}`} class="truncate">
+									{game.Name}
+								</h4>
+								<p transition:name={`game-score ${game.AppID}`}>{game["Metacritic score"]}</p>
+							</div>
+						</a>
+					))
+				}
+			</div>
+		</section>
 	</Card>
 </Layout>
