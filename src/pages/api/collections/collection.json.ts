@@ -1,4 +1,4 @@
-import { type APIRoute } from "astro"
+import type { APIRoute } from "astro"
 import { getSession } from "auth-astro/server"
 import { collections } from "../../../content/config"
 import {
@@ -7,7 +7,6 @@ import {
 	getCollectionByName,
 	removeCollection,
 } from "@/db/collections"
-import { collection } from "dist/server/chunks/analysis_D4qTqrZP.mjs"
 
 // devolver las colecciones del usuario
 export const GET: APIRoute = async ({ request }) => {
