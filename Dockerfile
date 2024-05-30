@@ -11,6 +11,7 @@ FROM base AS build-deps
 RUN pnpm install --production=false
 FROM build-deps AS build
 COPY . .
+ENV MONGODB_URI=mongodb+srv://doadmin:7y93a502mfkv4N6C@game-library-database-ac46a757.mongo.ondigitalocean.com/admin?authSource=admin&tls=true
 RUN pnpm run build
 FROM base AS runtime
 COPY --from=prod-deps /app/node_modules ./node_modules
