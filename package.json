@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^0.0.12",
-    "@astrojs/react": "^3.3.4",
+    "@astrojs/react": "^3.4.0",
     "@auth/core": "^0.18.6",
     "@formkit/drag-and-drop": "^0.0.38",
     "@hookform/resolvers": "^3.4.0",
@@ -40,7 +40,7 @@
     "@vercel/analytics": "^1.2.2",
     "ai": "^3.1.9",
     "algoliasearch": "^4.23.3",
-    "astro": "^4.8.4",
+    "astro": "^4.9.2",
     "auth-astro": "^4.1.1",
     "bad-words-es": "^1.0.0",
     "class-variance-authority": "^0.7.0",
@@ -71,10 +71,10 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.5.10",
+    "@astrojs/check": "^0.7.0",
     "@astrojs/node": "^8.2.5",
-    "@astrojs/sitemap": "^3.1.4",
-    "@astrojs/starlight": "^0.22.3",
+    "@astrojs/sitemap": "^3.1.5",
+    "@astrojs/starlight": "^0.23.2",
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/vercel": "^7.6.0",
     "@midudev/tailwind-animations": "^0.0.7",
