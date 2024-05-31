@@ -5,13 +5,7 @@ if (!import.meta.env.MONGODB_URI) {
 }
 
 const uri = import.meta.env.MONGODB_URI
-const options = {
-	retryReads: true,
-	retryWrites: true,
-	tls: true,
-	authSource: "admin",
-	replicaSet: "game-library-database",
-}
+const options = {}
 let cachedMongo
 
 const connectToDB = async () => {
