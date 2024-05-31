@@ -2,7 +2,6 @@ import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
 import react from "@astrojs/react"
 import auth from "auth-astro"
-import node from "@astrojs/node"
 import starlight from "@astrojs/starlight"
 import starlightOpenAPI, { openAPISidebarGroups } from "starlight-openapi"
 import { VitePWA } from "vite-plugin-pwa"
@@ -10,6 +9,8 @@ import sitemap from "@astrojs/sitemap"
 
 // Helper imports
 import { manifest, seoConfig } from "./src/utils/seoConfig"
+
+import vercel from "@astrojs/vercel/serverless"
 
 // https://astro.build/config
 export default defineConfig({
@@ -44,7 +45,9 @@ export default defineConfig({
 			sidebar: [
 				{
 					label: "Documentacion",
-					autogenerate: { directory: "documentacion" },
+					autogenerate: {
+						directory: "documentacion",
+					},
 				},
 				{
 					label: "EndPoints",
@@ -56,9 +59,7 @@ export default defineConfig({
 		sitemap(),
 	],
 	output: "server",
-	adapter: node({
-		mode: "standalone",
-	}),
+	adapter: vercel(),
 	build: {
 		inlineStylesheets: "always",
 	},
