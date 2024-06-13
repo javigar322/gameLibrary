@@ -23,9 +23,9 @@ if (resCollectionGames.ok) {
 ---
 
 <Layout title={name}>
-	<Card client:load className="h-full flex-1 p-3 transition-all">
+	<Card client:load className="h-full  flex-1 border-0 p-3  transition-all md:border">
 		<h1>{name}</h1>
-		<section class="grid grid-cols-2 gap-4 md:grid-cols-4 lg:grid-cols-6" id="juegos">
+		<section class="grid grid-cols-2 gap-4 py-3 md:grid-cols-4 lg:grid-cols-6" id="juegos">
 			{
 				collectionsGames.collections.map((game: Game) => (
 					<div class="w-full">

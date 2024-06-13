@@ -18,8 +18,9 @@ const urlsArray = data.Screenshots.split(",")
 
 <Layout title="Tienda">
 	<Card className="h-full flex-1 overflow-y-auto p-3">
-		<div class="flex justify-around gap-2 pt-5">
-			<div class="flex h-[450] w-[800px] flex-col space-y-5">
+		<div class="flex flex-col justify-around gap-2 pt-5 md:flex-row">
+			<!-- main -->
+			<div class="order-2 flex w-full flex-col space-y-5 md:order-1 md:w-[800px]">
 				<Carrusel client:load urls={urlsArray} />
 				<div class="w-full flex-row">
 					<Button client:load variant={"secondary"}> Añadir a la lista de deseos</Button>
@@ -29,22 +30,22 @@ const urlsArray = data.Screenshots.split(",")
 				<ReviewForm client:load id={id} />
 				<UserReviews client:load id={id} />
 			</div>
-
-			<div class="w-[450px] flex-col">
+			<!-- descripción -->
+			<div class="order-1 flex w-full flex-col md:order-2 md:w-[450px]">
 				<img
-					transition:name=`imagen-juego ${data.AppID}`
+					transition:name={`imagen-juego ${data.AppID}`}
 					src={data["Header image"]}
 					alt="videojuego"
 					width="450"
 					height="400"
 				/>
 				<div class="flex flex-row justify-between">
-					<h1 transition:name=`nombre-juego ${data.AppID}` class="pt-4">{data.Name}</h1>
-					<p transition:name=`game-score ${data.AppID}` class="pt-4">
+					<h1 transition:name={`nombre-juego ${data.AppID}`} class="pt-4">{data.Name}</h1>
+					<p transition:name={`game-score ${data.AppID}`} class="pt-4 md:pl-4 md:pt-0">
 						{data["Metacritic score"]}
 					</p>
 				</div>
-				<h2 class="pt-4">{data["About the game"]}</h2>
+				<h2 class="line-clamp-6 pt-4">{data["About the game"]}</h2>
 			</div>
 		</div>
 	</Card>

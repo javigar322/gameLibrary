@@ -22,7 +22,7 @@ import { Toaster } from "@/components/ui/toaster"
 
 	<body>
 		<div id="app" class="relative h-screen gap-2 p-2">
-			<aside class="flex flex-col overflow-y-hidden [grid-area:aside]">
+			<aside class="flex overflow-y-hidden [grid-area:aside] sm:flex-row md:flex-col">
 				<AsideMenu />
 			</aside>
 
@@ -30,8 +30,7 @@ import { Toaster } from "@/components/ui/toaster"
 				<slot transition:persist />
 				<Toaster client:load />
 			</main>
-
-			<footer class="h-auto [grid-area:footer]">
+			<footer class="hidden h-auto [grid-area:footer] md:block">
 				<Footer />
 			</footer>
 		</div>
@@ -41,8 +40,18 @@ import { Toaster } from "@/components/ui/toaster"
 				grid-template-areas:
 					"aside main main"
 					"footer footer footer ";
-				grid-template-columns: 350px 1fr;
+				grid-template-columns: 300px 1fr;
 				grid-template-rows: 1fr auto;
+			}
+			@media screen and (max-width: 768px) {
+				#app {
+					grid-template-areas:
+						"main"
+						"aside"
+						"footer";
+					grid-template-columns: 1fr;
+					grid-template-rows: 1fr auto;
+				}
 			}
 		</style>
 		<style is:global></style>

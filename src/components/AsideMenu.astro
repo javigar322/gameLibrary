@@ -14,7 +14,7 @@ const iniciado = session ? true : false
 
 <nav class="flex flex-1 flex-col gap-2">
 	<!-- carta de arriba -->
-	<Card>
+	<Card className=" flex flex-row justify-between border-0  md:block md:border">
 		<AsideMenuItem href="/">
 			<Gamepad2 />
 			GameLibrary
@@ -56,9 +56,15 @@ const iniciado = session ? true : false
 			<p id="logout-button" slot="logout">Logout</p>
 		</UserMenu>
 		<!-- Menu del usuario -->
+		<div class="sm:flex md:hidden">
+			<AsideMenuItem href="/games">
+				<Library />
+				Mi biblioteca
+			</AsideMenuItem>
+		</div>
 	</Card>
 	<!-- carta de abajo -->
-	<Card client:load className="flex-1 ">
+	<Card client:load className="hidden md:flex md:flex-1 md:flex-col  ">
 		<AsideMenuItem href="/games">
 			<Library />
 			Mi biblioteca
@@ -67,5 +73,3 @@ const iniciado = session ? true : false
 		<SideSearch transition:persist client:idle />
 	</Card>
 </nav>
-
-<script></script>

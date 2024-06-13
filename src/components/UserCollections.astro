@@ -21,11 +21,14 @@ if (resCollection.ok) {
 
 <div>
 	<h1>Colecciones {collections.length}</h1>
-	<section class="grid grid-cols-9 gap-4 p-2">
+	<section class="grid grid-cols-3 gap-4 py-2 md:grid-cols-9">
 		{
 			collections.map((collection, index) => (
 				<a href={`/collections/${collection.collectionName}`}>
-					<Card className=" carta relative h-32 w-full" data-collection={collection.collectionName}>
+					<Card
+						className=" carta relative h-32 w-full "
+						data-collection={collection.collectionName}
+					>
 						<div class="absolute bottom-3 w-full text-center">
 							<h1>{collection.collectionName}</h1>
 							<h4>({collection.games.length})</h4>

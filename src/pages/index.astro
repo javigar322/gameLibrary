@@ -1,5 +1,6 @@
 ---
 import GameCard from "@/components/GameCard.astro"
+import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import Layout from "@/layouts/Layout.astro"
 import type { Game } from "@/types/game"
@@ -102,31 +103,59 @@ const communityFavorites = await getUniqueGames(
 </style>
 
 <Layout title="home">
-	<Card className="h-full space-y-12 overflow-y-scroll  scroll-smooth p-[24px]">
+	<Card className="h-full space-y-12 overflow-y-scroll  scroll-smooth border-0 p-[24px] md:border ">
 		<section>
-			<h2>Top Adventure Games</h2>
-			<div class="mt-2 grid grid-cols-4 gap-4 p-4">
+			<div class="flex flex-row gap-3">
+				<h2>Top Adventure Games</h2>
+				<Button className="m-0 items-baseline justify-normal p-0 py-1 " variant={"link"}
+					><a href="/games/1?query=Adventure&genre=&minMetacriticScore=0&minUserScore=0">
+						Mostrar más
+					</a></Button
+				>
+			</div>
+			<div class="mt-2 grid grid-cols-2 gap-4 space-y-6 py-3 md:grid-cols-4">
 				{adventureGames.map((game: Game) => <GameCard game={game} />)}
 			</div>
 		</section>
 
 		<section>
-			<h2>Top Indie Games</h2>
-			<div class="mt-2 grid grid-cols-4 gap-4 px-4">
+			<div class="flex flex-row gap-3">
+				<h2>Top Indie Games</h2>
+				<Button className="m-0 items-baseline justify-normal p-0 py-1 " variant={"link"}
+					><a href="/games/1?query=&genre=Indie&minMetacriticScore=0&minUserScore=0">
+						Mostrar más
+					</a></Button
+				>
+			</div>
+			<div class="mt-2 grid grid-cols-2 gap-4 space-y-6 py-3 md:grid-cols-4">
 				{indieGames.map((game: Game) => <GameCard game={game} />)}
 			</div>
 		</section>
 
 		<section>
-			<h2>Top Rated Games</h2>
-			<div class="mt-2 grid grid-cols-4 gap-4 px-4">
+			<div class="flex flex-row gap-3">
+				<h2>Top Rated Games</h2>
+				<Button className="m-0 items-baseline justify-normal p-0 py-1 " variant={"link"}
+					><a href="/games/1?query=&genre=&minMetacriticScore=90&minUserScore=0">
+						Mostrar más
+					</a></Button
+				>
+			</div>
+			<div class="mt-2 grid grid-cols-2 gap-4 space-y-6 py-3 md:grid-cols-4">
 				{topRatedGames.map((game: Game) => <GameCard game={game} />)}
 			</div>
 		</section>
 
 		<section>
-			<h2>Community Favorites</h2>
-			<div class="mt-2 grid grid-cols-4 gap-4 space-y-6 px-4">
+			<div class="flex flex-row gap-3">
+				<h2>Community Favorites</h2>
+				<Button className="m-0 items-baseline justify-normal p-0 py-1 " variant={"link"}
+					><a href="/games/1?query=&genre=&minMetacriticScore=0&minUserScore=0">
+						Mostrar más
+					</a></Button
+				>
+			</div>
+			<div class="mt-2 grid grid-cols-2 gap-4 space-y-6 py-3 md:grid-cols-4">
 				{communityFavorites.map((game: Game) => <GameCard game={game} />)}
 			</div>
 		</section>

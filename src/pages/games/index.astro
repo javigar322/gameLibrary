@@ -7,11 +7,9 @@ import UserCollections from "@/components/UserCollections.astro"
 ---
 
 <Layout title="Inicio">
-	<Card className="h-full flex-1 p-3">
+	<Card className="h-full flex-1 overflow-y-scroll border-0 p-3 md:border ">
 		<UserCollections />
 		<h1>Mis juegos</h1>
 		<UserGames />
 	</Card>
-
-	<style></style>
 </Layout>

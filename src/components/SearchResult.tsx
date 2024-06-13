@@ -56,9 +56,7 @@ export function SearchResult() {
 				))}
 			</section>
 			<div className="mt-4 flex justify-center">
-				<Button onClick={loadMore} variant={"default"}>
-					Mostrar más
-				</Button>
+				<Button onClick={loadMore}>Mostrar más</Button>
 			</div>
 		</ScrollArea>
 	)
