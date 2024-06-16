@@ -30,14 +30,47 @@ export const POST: APIRoute = async ({ request }) => {
 	const game_found = await getGame(id)
 	const session = await getSession(request)
 	const user = session?.user
-	if (!game_found || !user) {
-		return new Response(null, {
-			status: 404,
-			statusText: "Not found",
-		})
+	if (!user) {
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Usuario no autenticado",
+				message: "Tienes que iniciar sesión para agregar juegos a tu biblioteca",
+			}),
+			{ status: 400 }
+		)
+	}
+	if (!game_found) {
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Juego no encontrado",
+				message: "No se ha encontrado el juego que intentas agregar a tu biblioteca",
+			}),
+			{
+				status: 404,
+				statusText: "Not found",
+			}
+		)
 	}
 	const newGame = await addGameToLibrary(id, user)
-	return new Response(JSON.stringify(newGame), {
-		status: 200,
-	})
+	if (!newGame) {
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Error al añadir el juego",
+				message: "No se ha podido añadir el juego a tu biblioteca",
+			}),
+			{ status: 400 }
+		)
+	}
+	return new Response(
+		JSON.stringify({
+			title: "Juego añadido",
+			message: `Se ha añadido el juego a tu biblioteca`,
+		}),
+		{
+			status: 200,
+		}
+	)
 }

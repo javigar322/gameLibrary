@@ -23,6 +23,16 @@ export const GET: APIRoute = async ({ params }) => {
 export const POST: APIRoute = async ({ params, request }) => {
 	const data = await request.formData()
 	const user = await getSession(request)
+	if (!user) {
+		return new Response(
+			JSON.stringify({
+				variant: "destructive",
+				title: "Error al crear la reseña",
+				message: "Debes iniciar sesión para crear una reseña",
+			}),
+			{ status: 400 }
+		)
+	}
 	const review = data.get("review")
 	const game_id = params.id
 	const user_reviewed = await userReviewed(game_id, user?.user)

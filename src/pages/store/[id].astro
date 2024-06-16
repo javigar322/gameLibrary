@@ -23,7 +23,7 @@ const urlsArray = data.Screenshots.split(",")
 			<div class="order-2 flex w-full flex-col space-y-5 md:order-1 md:w-[800px]">
 				<Carrusel client:load urls={urlsArray} />
 				<div class="w-full flex-row">
-					<Button client:load variant={"secondary"}> Añadir a la lista de deseos</Button>
+					<Button disabled client:load variant={"secondary"}> Añadir a la lista de deseos</Button>
 					<AddToLibrary client:load added={false} id={id} />
 				</div>
 				<h1 class="">Reseñas</h1>

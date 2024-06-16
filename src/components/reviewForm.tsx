@@ -25,8 +25,8 @@ export function ReviewForm(props: any) {
 		}
 		if (response.ok) {
 			toast({
-				title: "Reseña enviada",
-				description: responseMessage || "Tu reseña ha sido enviada correctamente",
+				title: data.title,
+				description: data.message,
 				action: (
 					<ToastAction altText="Borrar notificación" key="Delete">
 						Undo
@@ -36,8 +36,8 @@ export function ReviewForm(props: any) {
 		} else {
 			toast({
 				variant: "destructive",
-				title: "Reseña enviada",
-				description: responseMessage || "Tu reseña ha sido enviada correctamente",
+				title: data.title,
+				description: data.message,
 				action: (
 					<ToastAction altText="Borrar notificación" key="Delete">
 						Undo

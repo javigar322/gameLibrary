@@ -32,13 +32,12 @@ export function AddToLibrary(props) {
 				},
 			})
 
-			console.log("Response:", response)
-
+			const data = await response.json()
 			if (response.ok) {
 				console.log("Game successfully added to library.")
 				toast({
-					title: "Juego añadido",
-					message: "El juego se ha añadido a tu biblioteca",
+					title: data.title,
+					message: data.message,
 					action: (
 						<ToastAction altText="Borrar notificación" key="Delete">
 							Undo
@@ -51,8 +50,8 @@ export function AddToLibrary(props) {
 				console.log("Error: Game not added to library.")
 				toast({
 					variant: "destructive",
-					title: "Error: Juego no añadido",
-					message: "El juego no se ha podido añadir a tu biblioteca",
+					title: data.title,
+					message: data.message,
 					action: (
 						<ToastAction altText="Borrar notificación" key="Delete">
 							Undo
