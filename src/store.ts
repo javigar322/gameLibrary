@@ -12,3 +12,4 @@ export const userGames = persistentAtom<Game[]>("games", [], {
 
 export const userCollections = atom<Collection[]>([])
 export const draggedGame = atom<Game | null>(null)
+export const allGames = atom<Game[]>([])

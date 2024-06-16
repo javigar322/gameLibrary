@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback, useRef } from "react"
 import { columns } from "./gameColumns"
 import type { Game } from "@/types/game"
 import { DataTable } from "./data-table"
+import { useStore } from "@nanostores/react"
+import { allGames } from "@/store"
 
 export function GamePage() {
-	const [data, setData] = useState<Game[]>([])
+	const $allGames = useStore(allGames)
 
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const games = await fetch("/api/games/allGames.json")
-				const gameData = await games.json()
-				setData(gameData)
+				const response = await fetch("/api/games/allGames.json")
+				const gameData = await response.json()
+				allGames.set(gameData)
 			} catch (error) {
 				console.error("Error fetching data:", error)
 			}
 		}
 
 		fetchData()
-	}, [])
+	}, [$allGames]) // Dependencias vacías para ejecutar solo una vez al montar
 
 	return (
 		<div className="container mx-auto py-10">
-			{data.length > 0 ? <DataTable columns={columns} data={data} /> : <p>Loading...</p>}
+			{$allGames.length > 0 ? <DataTable columns={columns} data={$allGames} /> : <p>Loading...</p>}
 		</div>
 	)
 }

@@ -1,3 +1,4 @@
+import type { GameForm } from "@/types/game"
 import { Games } from "./mongodb"
 
 export const getGames = async () => {
@@ -28,7 +29,16 @@ export const getGame = async (id: number) => {
 }
 
 export const getGamesInfo = async (appId: number[]) => {
-	// Query the Games collection to retrieve details of each game using gameIds
 	const gamesInfo = (await Games()).find({ AppID: { $in: appId } }).toArray()
 	return gamesInfo
+}
+
+export const deleteGame = async (id: number) => {
+	const game = await (await Games()).deleteOne({ AppID: id })
+	return game
+}
+
+export const editGame = async (id: number, data: GameForm) => {
+	const game = await (await Games()).updateOne({ AppID: id }, { $set: { ...data } })
+	return game
 }

@@ -5,6 +5,7 @@ import Footer from "@/components/Footer.astro"
 import { Image } from "astro:assets"
 import { Gamepad2 } from "lucide-react"
 import "@/styles/globals.css"
+import { Toaster } from "@/components/ui/toaster"
 const session = await getSession(Astro.request)
 ---
 
@@ -45,6 +46,7 @@ const session = await getSession(Astro.request)
 
 			<main class="w-full [grid-area:main]">
 				<slot />
+				<Toaster client:load />
 			</main>
 
 			<footer class="h-auto [grid-area:footer]">

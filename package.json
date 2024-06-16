@@ -74,7 +74,6 @@
     "@midudev/tailwind-animations": "^0.0.7",
     "@types/react": "^18.3.2",
     "@types/react-dom": "^18.3.0",
-    "lightningcss": "^1.24.1",
     "postcss-import": "^16.1.0",
     "postcss-nesting": "^12.1.4",
     "prettier": "^3.2.5",

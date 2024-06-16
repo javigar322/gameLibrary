@@ -34,3 +34,15 @@ export interface Game {
 	"Screenshots": string
 	"Movies": string
 }
+
+export interface GameForm {
+	"Name"?: string
+	"Release date"?: string
+	"Genres"?: string
+	"Tags"?: string
+	"Screenshots"?: string
+	"Movies"?: string
+	"Developers"?: string
+	"Publishers"?: string
+	"Price"?: number
+}

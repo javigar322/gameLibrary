@@ -1,7 +1,9 @@
 import { type APIRoute } from "astro"
-import { getGame } from "@/db/games"
-import { addGameToLibrary } from "@/db/users"
+import { deleteGame, editGame, getGame } from "@/db/games"
+import { addGameToLibrary, getUser } from "@/db/users"
 import { getSession } from "auth-astro/server"
+import type { User } from "@/types/user"
+import { z } from "zod"
 
 // obtener un juego por id
 export const GET: APIRoute = async ({ request }) => {

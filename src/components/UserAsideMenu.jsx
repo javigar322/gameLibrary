@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
 import { Github, Twitch, Globe } from "lucide-react"
+import { userGames } from "@/store"
 const { signIn, signOut } = await import("auth-astro/client")
 
 export function UserMenu(props) {
@@ -32,7 +33,7 @@ export function UserMenu(props) {
 	// permite que un usuario cierre su sesión en la aplicación
 	const handleClickLogout = async (event) => {
 		event.stopPropagation()
-
+		userGames.set([])
 		await signOut()
 	}
 	if (!props.data) {
